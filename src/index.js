@@ -2,8 +2,14 @@
 
 // Import Firebase modules
 import { initializeApp } from "firebase/app";
-import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
-import { getFirestore } from "firebase/firestore";
+import {
+  getAuth,
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+  signOut,
+  onAuthStateChanged,
+} from "firebase/auth";
+import { getFirestore, collection, getDocs } from "firebase/firestore";
 
 // Firebase configuration
 const firebaseConfig = {
@@ -43,6 +49,15 @@ document.addEventListener("DOMContentLoaded", function () {
     );
   }
 
+  // Listen for auth state changes
+  onAuthStateChanged(auth, (user) => {
+    if (user) {
+      console.log("User logged in: ", user);
+    } else {
+      console.log("User logged out");
+    }
+  });
+
   // Signup form handling
   const signupForm = document.querySelector("#signup-form");
   if (signupForm) {
@@ -61,7 +76,9 @@ document.addEventListener("DOMContentLoaded", function () {
         .then((cred) => {
           console.log("User created:", cred.user);
           const modal = document.querySelector("#modal-signup");
-          M.Modal.getInstance(modal).close();
+          if (modal) {
+            M.Modal.getInstance(modal).close();
+          }
           signupForm.reset(); // Reset the form only after successful signup
         })
         .catch((error) => {
@@ -71,4 +88,102 @@ document.addEventListener("DOMContentLoaded", function () {
   } else {
     console.error("Signup form not found. Please check the form ID.");
   }
+
+  // Logout
+  const logout = document.querySelector("#logout");
+  if (logout) {
+    logout.addEventListener("click", (e) => {
+      e.preventDefault();
+      signOut(auth)
+        .then(() => {
+          console.log("User signed out successfully.");
+        })
+        .catch((error) => {
+          console.error("Error signing out:", error.message);
+        });
+    });
+  }
+
+  // Login
+  const loginForm = document.querySelector("#login-form");
+  if (loginForm) {
+    loginForm.addEventListener("submit", (e) => {
+      e.preventDefault();
+
+      // Get user info
+      const email = loginForm["login-email"].value;
+      const password = loginForm["login-password"].value;
+
+      signInWithEmailAndPassword(auth, email, password)
+        .then((cred) => {
+          console.log("User signed in:", cred.user);
+          // Close the login modal and reset the form
+          const modal = document.querySelector("#modal-login");
+          if (modal) {
+            M.Modal.getInstance(modal).close();
+          }
+          loginForm.reset();
+        })
+        .catch((error) => {
+          console.error("Error signing in:", error.message);
+        });
+    });
+  }
+
+  // Get data from Firestore and setup tasks
+  const taskCollection = collection(db, "tasks");
+  getDocs(taskCollection)
+    .then((snapshot) => {
+      console.log("Firestore snapshot:", snapshot); // Log the entire snapshot
+      if (!snapshot.empty) {
+        setupTasks(snapshot.docs);
+      } else {
+        console.log("No tasks found.");
+      }
+    })
+    .catch((error) => {
+      console.error("Error getting tasks:", error.message);
+    });
 });
+
+// Setup tasks function to render tasks on the page
+const setupTasks = (data) => {
+  let html = "";
+  console.log("Rendering tasks...");
+
+  if (data.length === 0) {
+    console.log("No tasks found in data.");
+  }
+
+  data.forEach((doc) => {
+    const task = doc.data();
+    console.log("Task data:", task);
+
+    // Ensure task fields are available
+    const title = task.title || "No title";
+    const description = task.description || "No description available";
+    const fee = task.fee !== undefined ? `$${task.fee}` : "No fee specified";
+
+    const li = `
+      <li>
+        <div class="collapsible-header grey lighten-4">${title}</div>
+        <div class="collapsible-body white">${description}</div>
+        <div class="collapsible-body white">${fee}</div>
+      </li>
+    `;
+    html += li;
+  });
+
+  // Render the tasks in the collapsible list
+  const taskList = document.querySelector(".tasks");
+  if (taskList) {
+    taskList.innerHTML = html;
+    console.log("Tasks rendered successfully.");
+
+    // Re-initialize Materialize CSS collapsible component
+    const collapsibles = document.querySelectorAll(".collapsible");
+    M.Collapsible.init(collapsibles);
+  } else {
+    console.error("Task list element not found.");
+  }
+};

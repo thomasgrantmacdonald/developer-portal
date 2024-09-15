@@ -38685,6 +38685,15 @@ document.addEventListener("DOMContentLoaded", function () {
     console.error("Materialize library is not loaded. Please ensure Materialize JavaScript is loaded before the bundle.");
   }
 
+  // Listen for auth state changes
+  (0,firebase_auth__WEBPACK_IMPORTED_MODULE_1__.onAuthStateChanged)(auth, function (user) {
+    if (user) {
+      console.log("User logged in: ", user);
+    } else {
+      console.log("User logged out");
+    }
+  });
+
   // Signup form handling
   var signupForm = document.querySelector("#signup-form");
   if (signupForm) {
@@ -38702,7 +38711,9 @@ document.addEventListener("DOMContentLoaded", function () {
       (0,firebase_auth__WEBPACK_IMPORTED_MODULE_1__.createUserWithEmailAndPassword)(auth, email, password).then(function (cred) {
         console.log("User created:", cred.user);
         var modal = document.querySelector("#modal-signup");
-        M.Modal.getInstance(modal).close();
+        if (modal) {
+          M.Modal.getInstance(modal).close();
+        }
         signupForm.reset(); // Reset the form only after successful signup
       })["catch"](function (error) {
         console.error("Error signing up:", error.message);
@@ -38711,7 +38722,89 @@ document.addEventListener("DOMContentLoaded", function () {
   } else {
     console.error("Signup form not found. Please check the form ID.");
   }
+
+  // Logout
+  var logout = document.querySelector("#logout");
+  if (logout) {
+    logout.addEventListener("click", function (e) {
+      e.preventDefault();
+      (0,firebase_auth__WEBPACK_IMPORTED_MODULE_1__.signOut)(auth).then(function () {
+        console.log("User signed out successfully.");
+      })["catch"](function (error) {
+        console.error("Error signing out:", error.message);
+      });
+    });
+  }
+
+  // Login
+  var loginForm = document.querySelector("#login-form");
+  if (loginForm) {
+    loginForm.addEventListener("submit", function (e) {
+      e.preventDefault();
+
+      // Get user info
+      var email = loginForm["login-email"].value;
+      var password = loginForm["login-password"].value;
+      (0,firebase_auth__WEBPACK_IMPORTED_MODULE_1__.signInWithEmailAndPassword)(auth, email, password).then(function (cred) {
+        console.log("User signed in:", cred.user);
+        // Close the login modal and reset the form
+        var modal = document.querySelector("#modal-login");
+        if (modal) {
+          M.Modal.getInstance(modal).close();
+        }
+        loginForm.reset();
+      })["catch"](function (error) {
+        console.error("Error signing in:", error.message);
+      });
+    });
+  }
+
+  // Get data from Firestore and setup tasks
+  var taskCollection = (0,firebase_firestore__WEBPACK_IMPORTED_MODULE_2__.collection)(db, "tasks");
+  (0,firebase_firestore__WEBPACK_IMPORTED_MODULE_2__.getDocs)(taskCollection).then(function (snapshot) {
+    console.log("Firestore snapshot:", snapshot); // Log the entire snapshot
+    if (!snapshot.empty) {
+      setupTasks(snapshot.docs);
+    } else {
+      console.log("No tasks found.");
+    }
+  })["catch"](function (error) {
+    console.error("Error getting tasks:", error.message);
+  });
 });
+
+// Setup tasks function to render tasks on the page
+var setupTasks = function setupTasks(data) {
+  var html = "";
+  console.log("Rendering tasks...");
+  if (data.length === 0) {
+    console.log("No tasks found in data.");
+  }
+  data.forEach(function (doc) {
+    var task = doc.data();
+    console.log("Task data:", task);
+
+    // Ensure task fields are available
+    var title = task.title || "No title";
+    var description = task.description || "No description available";
+    var fee = task.fee !== undefined ? "$".concat(task.fee) : "No fee specified";
+    var li = "\n      <li>\n        <div class=\"collapsible-header grey lighten-4\">".concat(title, "</div>\n        <div class=\"collapsible-body white\">").concat(description, "</div>\n        <div class=\"collapsible-body white\">").concat(fee, "</div>\n      </li>\n    ");
+    html += li;
+  });
+
+  // Render the tasks in the collapsible list
+  var taskList = document.querySelector(".tasks");
+  if (taskList) {
+    taskList.innerHTML = html;
+    console.log("Tasks rendered successfully.");
+
+    // Re-initialize Materialize CSS collapsible component
+    var collapsibles = document.querySelectorAll(".collapsible");
+    M.Collapsible.init(collapsibles);
+  } else {
+    console.error("Task list element not found.");
+  }
+};
 /******/ })()
 ;
 //# sourceMappingURL=bundle.js.map
