@@ -38643,6 +38643,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var firebase_app__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! firebase/app */ "./node_modules/firebase/app/dist/esm/index.esm.js");
 /* harmony import */ var firebase_auth__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! firebase/auth */ "./node_modules/firebase/auth/dist/esm/index.esm.js");
 /* harmony import */ var firebase_firestore__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! firebase/firestore */ "./node_modules/firebase/firestore/dist/esm/index.esm.js");
+// index.js
+
 // Import Firebase modules
 
 
@@ -38665,22 +38667,49 @@ var auth = (0,firebase_auth__WEBPACK_IMPORTED_MODULE_1__.getAuth)(app);
 var db = (0,firebase_firestore__WEBPACK_IMPORTED_MODULE_2__.getFirestore)(app);
 
 // Ensure Firebase is set up correctly
-console.log('Firebase initialized successfully:', app);
+console.log("Firebase initialized successfully:", app);
 
 // Initialize Materialize components after the DOM is fully loaded
-document.addEventListener('DOMContentLoaded', function () {
+document.addEventListener("DOMContentLoaded", function () {
   // Check if Materialize is loaded
-  if (typeof M !== 'undefined') {
+  if (typeof M !== "undefined") {
     // Initialize modals
-    var modals = document.querySelectorAll('.modal');
+    var modals = document.querySelectorAll(".modal");
     M.Modal.init(modals);
 
     // Initialize collapsibles
-    var collapsibles = document.querySelectorAll('.collapsible');
+    var collapsibles = document.querySelectorAll(".collapsible");
     M.Collapsible.init(collapsibles);
-    console.log('Materialize components initialized successfully.');
+    console.log("Materialize components initialized successfully.");
   } else {
-    console.error('Materialize library is not loaded. Please ensure Materialize JavaScript is loaded before the bundle.');
+    console.error("Materialize library is not loaded. Please ensure Materialize JavaScript is loaded before the bundle.");
+  }
+
+  // Signup form handling
+  var signupForm = document.querySelector("#signup-form");
+  if (signupForm) {
+    console.log("Signup form found and event listener attached.");
+    signupForm.addEventListener("submit", function (e) {
+      e.preventDefault();
+      console.log("Signup form submitted");
+
+      // Get user info
+      var email = signupForm["signup-email"].value;
+      var password = signupForm["signup-password"].value;
+      console.log(email, password);
+
+      // Sign up the user
+      (0,firebase_auth__WEBPACK_IMPORTED_MODULE_1__.createUserWithEmailAndPassword)(auth, email, password).then(function (cred) {
+        console.log("User created:", cred.user);
+        var modal = document.querySelector("#modal-signup");
+        M.Modal.getInstance(modal).close();
+        signupForm.reset(); // Reset the form only after successful signup
+      })["catch"](function (error) {
+        console.error("Error signing up:", error.message);
+      });
+    });
+  } else {
+    console.error("Signup form not found. Please check the form ID.");
   }
 });
 /******/ })()
