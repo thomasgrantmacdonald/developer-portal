@@ -38679,9 +38679,9 @@ document.addEventListener("DOMContentLoaded", function () {
     var collapsibles = document.querySelectorAll(".collapsible");
     M.Collapsible.init(collapsibles);
 
-    // Initialize sidenav for mobile
-    var sidenavs = document.querySelectorAll(".sidenav");
-    M.Sidenav.init(sidenavs);
+    // Initialize side navigation
+    var sidenav = document.querySelectorAll(".sidenav");
+    M.Sidenav.init(sidenav);
     console.log("Materialize components initialized successfully.");
   } else {
     console.error("Materialize library is not loaded. Please ensure Materialize JavaScript is loaded before the bundle.");
@@ -38690,7 +38690,6 @@ document.addEventListener("DOMContentLoaded", function () {
   // Listen for auth state changes
   (0,firebase_auth__WEBPACK_IMPORTED_MODULE_1__.onAuthStateChanged)(auth, function (user) {
     var taskList = document.querySelector(".tasks");
-    console.log(user);
     if (user) {
       // Fetch and display tasks in real-time
       var taskCollection = (0,firebase_firestore__WEBPACK_IMPORTED_MODULE_2__.collection)(db, "tasks");
@@ -38797,38 +38796,18 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 
   // Logout
-  var logout = document.querySelector("#logout");
-  var logoutMobile = document.querySelector("#logout-mobile"); // Select the mobile logout button
-
-  // Attach the logout event listener for desktop
+  var logout = document.querySelectorAll("#logout");
   if (logout) {
-    logout.addEventListener("click", function (e) {
-      e.preventDefault();
-      (0,firebase_auth__WEBPACK_IMPORTED_MODULE_1__.signOut)(auth).then(function () {
-        console.log("User signed out successfully.");
-      })["catch"](function (error) {
-        M.toast({
-          html: "Error: ".concat(error.message),
-          classes: "red darken-1"
-        });
-      });
-    });
-  }
-
-  // Attach the logout event listener for mobile
-  if (logoutMobile) {
-    logoutMobile.addEventListener("click", function (e) {
-      e.preventDefault();
-      (0,firebase_auth__WEBPACK_IMPORTED_MODULE_1__.signOut)(auth).then(function () {
-        console.log("User signed out successfully.");
-        var sidenavInstance = M.Sidenav.getInstance(document.querySelector(".sidenav"));
-        if (sidenavInstance) {
-          sidenavInstance.close(); // Close the mobile sidenav after logout
-        }
-      })["catch"](function (error) {
-        M.toast({
-          html: "Error: ".concat(error.message),
-          classes: "red darken-1"
+    logout.forEach(function (btn) {
+      btn.addEventListener("click", function (e) {
+        e.preventDefault();
+        (0,firebase_auth__WEBPACK_IMPORTED_MODULE_1__.signOut)(auth).then(function () {
+          console.log("User signed out successfully.");
+        })["catch"](function (error) {
+          M.toast({
+            html: "Error: ".concat(error.message),
+            classes: "red darken-1"
+          });
         });
       });
     });
@@ -38857,30 +38836,47 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 });
 
-// Update the UI based upon login status
+// Select elements for UI updates
 var loggedOutLinks = document.querySelectorAll(".logged-out");
 var loggedInLinks = document.querySelectorAll(".logged-in");
 var accountDetails = document.querySelector(".account-details");
+var appDescription = document.querySelector("#app-description");
+
+// Update the UI based upon login status
 var setupUI = function setupUI(user) {
   if (user) {
     // Account info
     var html = "\n      <div>Logged in as ".concat(user.email, "</div>\n    ");
     accountDetails.innerHTML = html;
+
+    // Show logged-in links and hide logged-out links
     loggedInLinks.forEach(function (item) {
       return item.style.display = "block";
     });
     loggedOutLinks.forEach(function (item) {
       return item.style.display = "none";
     });
+
+    // Hide the app description when logged in
+    if (appDescription) {
+      appDescription.style.display = "none";
+    }
   } else {
     // Hide account info
     accountDetails.innerHTML = "";
+
+    // Show logged-out links and hide logged-in links
     loggedInLinks.forEach(function (item) {
       return item.style.display = "none";
     });
     loggedOutLinks.forEach(function (item) {
       return item.style.display = "block";
     });
+
+    // Show the app description when logged out
+    if (appDescription) {
+      appDescription.style.display = "block";
+    }
   }
 };
 

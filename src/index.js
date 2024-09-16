@@ -40,9 +40,9 @@ document.addEventListener("DOMContentLoaded", function () {
     const collapsibles = document.querySelectorAll(".collapsible");
     M.Collapsible.init(collapsibles);
 
-    // Initialize sidenav for mobile
-    const sidenavs = document.querySelectorAll(".sidenav");
-    M.Sidenav.init(sidenavs);
+    // Initialize side navigation
+    const sidenav = document.querySelectorAll(".sidenav");
+    M.Sidenav.init(sidenav);
 
     console.log("Materialize components initialized successfully.");
   } else {
@@ -54,7 +54,6 @@ document.addEventListener("DOMContentLoaded", function () {
   // Listen for auth state changes
   onAuthStateChanged(auth, (user) => {
     const taskList = document.querySelector(".tasks");
-    console.log(user);
 
     if (user) {
       // Fetch and display tasks in real-time
@@ -88,7 +87,10 @@ document.addEventListener("DOMContentLoaded", function () {
           }
         );
       } catch (error) {
-        console.error("Error while setting up Firestore listener:", error.message);
+        console.error(
+          "Error while setting up Firestore listener:",
+          error.message
+        );
       }
     } else {
       console.log("User logged out");
@@ -178,46 +180,22 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 
   // Logout
-  const logout = document.querySelector("#logout");
-  const logoutMobile = document.querySelector("#logout-mobile"); // Select the mobile logout button
-
-  // Attach the logout event listener for desktop
+  const logout = document.querySelectorAll("#logout");
   if (logout) {
-    logout.addEventListener("click", (e) => {
-      e.preventDefault();
-      signOut(auth)
-        .then(() => {
-          console.log("User signed out successfully.");
-        })
-        .catch((error) => {
-          M.toast({
-            html: `Error: ${error.message}`,
-            classes: "red darken-1",
+    logout.forEach((btn) => {
+      btn.addEventListener("click", (e) => {
+        e.preventDefault();
+        signOut(auth)
+          .then(() => {
+            console.log("User signed out successfully.");
+          })
+          .catch((error) => {
+            M.toast({
+              html: `Error: ${error.message}`,
+              classes: "red darken-1",
+            });
           });
-        });
-    });
-  }
-
-  // Attach the logout event listener for mobile
-  if (logoutMobile) {
-    logoutMobile.addEventListener("click", (e) => {
-      e.preventDefault();
-      signOut(auth)
-        .then(() => {
-          console.log("User signed out successfully.");
-          const sidenavInstance = M.Sidenav.getInstance(
-            document.querySelector(".sidenav")
-          );
-          if (sidenavInstance) {
-            sidenavInstance.close(); // Close the mobile sidenav after logout
-          }
-        })
-        .catch((error) => {
-          M.toast({
-            html: `Error: ${error.message}`,
-            classes: "red darken-1",
-          });
-        });
+      });
     });
   }
 
@@ -247,11 +225,13 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 });
 
-// Update the UI based upon login status
+// Select elements for UI updates
 const loggedOutLinks = document.querySelectorAll(".logged-out");
 const loggedInLinks = document.querySelectorAll(".logged-in");
 const accountDetails = document.querySelector(".account-details");
+const appDescription = document.querySelector("#app-description");
 
+// Update the UI based upon login status
 const setupUI = (user) => {
   if (user) {
     // Account info
@@ -260,14 +240,26 @@ const setupUI = (user) => {
     `;
     accountDetails.innerHTML = html;
 
+    // Show logged-in links and hide logged-out links
     loggedInLinks.forEach((item) => (item.style.display = "block"));
     loggedOutLinks.forEach((item) => (item.style.display = "none"));
+
+    // Hide the app description when logged in
+    if (appDescription) {
+      appDescription.style.display = "none";
+    }
   } else {
     // Hide account info
     accountDetails.innerHTML = "";
 
+    // Show logged-out links and hide logged-in links
     loggedInLinks.forEach((item) => (item.style.display = "none"));
     loggedOutLinks.forEach((item) => (item.style.display = "block"));
+
+    // Show the app description when logged out
+    if (appDescription) {
+      appDescription.style.display = "block";
+    }
   }
 };
 
