@@ -4,6 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"> <!-- Ensure Material Icons are loaded -->
   <link rel="stylesheet" href="style.css">
   <title>Task Marketplace</title>
 </head>
@@ -12,12 +13,17 @@
   <!--NAVBAR-->
   <nav class="z-depth-0 grey lighten-4">
     <div class="nav-wrapper container">
-      <a href="#" class="brand-logo">
+      <!-- Logo on the left side -->
+      <a href="#" class="brand-logo left">
         <img src="img/logo.svg" class="nav-logo">
       </a>
+      <!-- Mobile Sign Up Button -->
+      <a href="#" class="nav-signup-btn hide-on-large-only">Sign Up</a>
+      <!-- Mobile Menu Trigger with the hamburger icon -->
       <a href="#" data-target="mobile-demo" class="sidenav-trigger right">
-        <i class="material-icons">menu</i>
+        <i class="material-icons">menu</i> <!-- Correct hamburger icon -->
       </a>
+      <!-- Desktop Links -->
       <ul id="nav-mobile" class="right hide-on-med-and-down">
         <li class="logged-in" style="display: none;">
           <a href="#" class="modal-trigger" data-target="modal-account">Account</a>
@@ -125,17 +131,17 @@
 
   <!-- Hero Section -->
   <section class="section_hero section-padding padding-large">
-    <div class="container hero-container" style="display: flex; align-items: center; justify-content: space-between;">
-      <div class="hero-text" style="flex: 1; padding-right: 20px;">
-        <h1>Self-Serve Task Marketplace with Dynamic Pricing</h1>
+    <div class="container hero-container">
+      <div class="hero-text">
+        <h1>A Self-Serve Task Marketplace with Dynamic Pricing.</h1>
         <p>Join our task marketplace where developers choose tasks based on their interests and skills.</p>
         <div class="hero-buttons">
           <button class="login-btn modal-trigger" data-target="modal-login">Login</button>
           <button class="signup-btn modal-trigger" data-target="modal-signup">Sign Up</button>
         </div>
       </div>
-      <div class="hero-gif" style="flex: 1; text-align: right;">
-        <img src="https://i.giphy.com/media/v1.Y2lkPTc5MGI3NjExMWRuN2M4YWg4MDAyN2xkNjd6ZGRtbXoxcDRhd3ZqdXhyM3pwcHBtMyZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9dg/bWGugCywc1x28wgqeC/giphy.gif" alt="Dynamic Task Marketplace" class="gif-image" style="max-width: 100%; height: auto;">
+      <div class="hero-gif">
+        <img src="https://i.giphy.com/media/v1.Y2lkPTc5MGI3NjExMWRuN2M4YWg4MDAyN2xkNjd6ZGRtbXoxcDRhd3ZqdXhyM3pwcHBtMyZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9dg/bWGugCywc1x28wgqeC/giphy.gif" alt="Dynamic Task Marketplace" class="gif-image">
       </div>
     </div>
   </section>
@@ -150,7 +156,7 @@
     <h2>Why we made this:</h2>
     <h3>The Problem</h3>
     <p>Paying developers per task is better than hourly because it encourages efficiency, ensures clear deliverables, and rewards results rather than time spent, which helps keep projects on budget and on schedule.</p>
-    <p>However, constantly coordinating with teams and contractors and determining pricing for every task is extremely innefficient and time consuming.</p>
+    <p>However, constantly coordinating with teams and contractors and determining pricing for every task is extremely inefficient and time consuming.</p>
     <h3>Our Solution</h3>
     <p>This Task Marketplace lets developers of all skill levels choose the tasks they want to work on. Each task's fee is set algorithmically based on factors like urgency, complexity, and required skills, so tasks just need a description—no need to set prices or assign work. Urgent tasks and tasks for high-value clients pay more, encouraging developers to take them on quickly.</p>
     <h3>Payments</h3>
