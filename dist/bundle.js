@@ -35499,6 +35499,654 @@ function getModularInstance(service) {
 
 /***/ }),
 
+/***/ "./node_modules/css-loader/dist/cjs.js!./src/style.css":
+/*!*************************************************************!*\
+  !*** ./node_modules/css-loader/dist/cjs.js!./src/style.css ***!
+  \*************************************************************/
+/***/ ((module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _node_modules_css_loader_dist_runtime_sourceMaps_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../node_modules/css-loader/dist/runtime/sourceMaps.js */ "./node_modules/css-loader/dist/runtime/sourceMaps.js");
+/* harmony import */ var _node_modules_css_loader_dist_runtime_sourceMaps_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_css_loader_dist_runtime_sourceMaps_js__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../node_modules/css-loader/dist/runtime/api.js */ "./node_modules/css-loader/dist/runtime/api.js");
+/* harmony import */ var _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1__);
+// Imports
+
+
+var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default()((_node_modules_css_loader_dist_runtime_sourceMaps_js__WEBPACK_IMPORTED_MODULE_0___default()));
+// Module
+___CSS_LOADER_EXPORT___.push([module.id, `/* General Styling */
+body {
+    font-family: 'Inter', sans-serif;
+    background-color: #f5f5f5;
+    margin: 0;
+    padding: 0;
+}
+
+/* Navbar Styling */
+nav {
+    padding: 0 20px;
+}
+
+.brand-logo img {
+    max-height: 50px; /* Adjust logo size */
+}
+
+.sidenav-trigger {
+    color: #2B2C78 !important; /* Hamburger icon color */
+}
+
+/* Section Padding Classes */
+.section-padding {
+    padding: 4rem 0; /* General section padding */
+}
+
+.padding-large {
+    padding: 5rem 0; /* Larger padding for specific sections */
+}
+
+/* Headings Styling */
+h1 {
+    font-size: 4rem; /* Adjust font size for main headings */
+    color: #2B2C78;
+}
+
+h2 {
+    font-size: 2.4rem; /* Adjust font size for subheadings */
+    margin-bottom: 0;
+    color: #2B2C78;
+}
+
+h3 {
+    font-size: 1.3rem; /* Adjust font size for smaller subheadings */
+    font-weight: 400;
+    color: #2B2C78;
+}
+
+/* Hero Section Styling */
+.section_hero {
+    padding: 4rem 0; /* Default padding */
+    font-size: 1.3rem;
+}
+
+.section_hero p {
+    color: #333; /* Adjust as needed */
+    font-size: 1.4rem; /* Increased font size for readability */
+    margin-top: 1rem;
+}
+
+/* Hero Buttons */
+.hero-buttons {
+    margin-top: 20px;
+}
+
+.hero-buttons .login-btn {
+    background-color: #FF0031; /* Red background */
+    color: white;
+    font-family: 'Inter', sans-serif;
+    margin-right: 10px;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    transition: background-color 0.3s;
+}
+
+.hero-buttons .login-btn:hover {
+    background-color: #e6002c;
+}
+
+.hero-buttons .signup-btn {
+    background-color: transparent;
+    border: 2px solid #2B2C78; /* Blue border */
+    color: #2B2C78; /* Blue text */
+    border-radius: 5px; /* Small radius */
+    font-family: 'Inter', sans-serif;
+    padding: 8px 18px;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.hero-buttons .signup-btn:hover {
+    background-color: #2B2C78;
+    color: white;
+}
+
+/* App Description */
+#app-description {
+    margin-top: 40px;
+    padding: 20px;
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+#app-description h2,
+#app-description h3 {
+    margin-bottom: 10px;
+}
+
+/* Collapsible Task List Styling */
+.collapsible-header {
+    background-color: white !important; /* Ensure background is white */
+    border-bottom: 1px solid #ddd;
+    padding: 10px 20px;
+}
+
+.collapsible-body {
+    background-color: white;
+    padding: 20px;
+}
+
+/* Modals */
+.modal {
+    border-radius: 8px;
+}
+
+.modal .btn {
+    background-color: #FF0031;
+    color: white;
+    font-family: 'Inter', sans-serif;
+}
+
+.modal .btn:hover {
+    background-color: #e6002c;
+}
+
+/* Sidenav (Mobile Navigation) */
+.sidenav {
+    width: 250px;
+    background-color: #f5f5f5;
+}
+
+.sidenav li > a {
+    color: #2B2C78;
+}
+
+/* Footer Styling */
+.footer {
+    background-color: #2B2C78; /* Blue background */
+    color: white;
+    padding: 20px 0;
+    text-align: center;
+}
+
+.footer-logo {
+    filter: brightness(0) invert(1); /* Make the logo white */
+    max-height: 40px;
+    margin-bottom: 10px;
+}
+
+.footer-text {
+    font-size: 0.875rem;
+    margin: 0;
+}
+
+.footer-link {
+    color: #CFD9E3; /* Lighter color for the link */
+    text-decoration: underline;
+}
+
+.footer-link:hover {
+    color: #ffffff; /* Change color on hover */
+}
+
+/* Utility Classes */
+.center-align {
+    text-align: center;
+}
+
+.container {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 0 15px;
+}
+`, "",{"version":3,"sources":["webpack://./src/style.css"],"names":[],"mappings":"AAAA,oBAAoB;AACpB;IACI,gCAAgC;IAChC,yBAAyB;IACzB,SAAS;IACT,UAAU;AACd;;AAEA,mBAAmB;AACnB;IACI,eAAe;AACnB;;AAEA;IACI,gBAAgB,EAAE,qBAAqB;AAC3C;;AAEA;IACI,yBAAyB,EAAE,yBAAyB;AACxD;;AAEA,4BAA4B;AAC5B;IACI,eAAe,EAAE,4BAA4B;AACjD;;AAEA;IACI,eAAe,EAAE,yCAAyC;AAC9D;;AAEA,qBAAqB;AACrB;IACI,eAAe,EAAE,uCAAuC;IACxD,cAAc;AAClB;;AAEA;IACI,iBAAiB,EAAE,qCAAqC;IACxD,gBAAgB;IAChB,cAAc;AAClB;;AAEA;IACI,iBAAiB,EAAE,6CAA6C;IAChE,gBAAgB;IAChB,cAAc;AAClB;;AAEA,yBAAyB;AACzB;IACI,eAAe,EAAE,oBAAoB;IACrC,iBAAiB;AACrB;;AAEA;IACI,WAAW,EAAE,qBAAqB;IAClC,iBAAiB,EAAE,wCAAwC;IAC3D,gBAAgB;AACpB;;AAEA,iBAAiB;AACjB;IACI,gBAAgB;AACpB;;AAEA;IACI,yBAAyB,EAAE,mBAAmB;IAC9C,YAAY;IACZ,gCAAgC;IAChC,kBAAkB;IAClB,YAAY;IACZ,kBAAkB;IAClB,kBAAkB;IAClB,iCAAiC;AACrC;;AAEA;IACI,yBAAyB;AAC7B;;AAEA;IACI,6BAA6B;IAC7B,yBAAyB,EAAE,gBAAgB;IAC3C,cAAc,EAAE,cAAc;IAC9B,kBAAkB,EAAE,iBAAiB;IACrC,gCAAgC;IAChC,iBAAiB;IACjB,6CAA6C;AACjD;;AAEA;IACI,yBAAyB;IACzB,YAAY;AAChB;;AAEA,oBAAoB;AACpB;IACI,gBAAgB;IAChB,aAAa;IACb,uBAAuB;IACvB,kBAAkB;IAClB,yCAAyC;AAC7C;;AAEA;;IAEI,mBAAmB;AACvB;;AAEA,kCAAkC;AAClC;IACI,kCAAkC,EAAE,+BAA+B;IACnE,6BAA6B;IAC7B,kBAAkB;AACtB;;AAEA;IACI,uBAAuB;IACvB,aAAa;AACjB;;AAEA,WAAW;AACX;IACI,kBAAkB;AACtB;;AAEA;IACI,yBAAyB;IACzB,YAAY;IACZ,gCAAgC;AACpC;;AAEA;IACI,yBAAyB;AAC7B;;AAEA,gCAAgC;AAChC;IACI,YAAY;IACZ,yBAAyB;AAC7B;;AAEA;IACI,cAAc;AAClB;;AAEA,mBAAmB;AACnB;IACI,yBAAyB,EAAE,oBAAoB;IAC/C,YAAY;IACZ,eAAe;IACf,kBAAkB;AACtB;;AAEA;IACI,+BAA+B,EAAE,wBAAwB;IACzD,gBAAgB;IAChB,mBAAmB;AACvB;;AAEA;IACI,mBAAmB;IACnB,SAAS;AACb;;AAEA;IACI,cAAc,EAAE,+BAA+B;IAC/C,0BAA0B;AAC9B;;AAEA;IACI,cAAc,EAAE,0BAA0B;AAC9C;;AAEA,oBAAoB;AACpB;IACI,kBAAkB;AACtB;;AAEA;IACI,iBAAiB;IACjB,cAAc;IACd,eAAe;AACnB","sourcesContent":["/* General Styling */\r\nbody {\r\n    font-family: 'Inter', sans-serif;\r\n    background-color: #f5f5f5;\r\n    margin: 0;\r\n    padding: 0;\r\n}\r\n\r\n/* Navbar Styling */\r\nnav {\r\n    padding: 0 20px;\r\n}\r\n\r\n.brand-logo img {\r\n    max-height: 50px; /* Adjust logo size */\r\n}\r\n\r\n.sidenav-trigger {\r\n    color: #2B2C78 !important; /* Hamburger icon color */\r\n}\r\n\r\n/* Section Padding Classes */\r\n.section-padding {\r\n    padding: 4rem 0; /* General section padding */\r\n}\r\n\r\n.padding-large {\r\n    padding: 5rem 0; /* Larger padding for specific sections */\r\n}\r\n\r\n/* Headings Styling */\r\nh1 {\r\n    font-size: 4rem; /* Adjust font size for main headings */\r\n    color: #2B2C78;\r\n}\r\n\r\nh2 {\r\n    font-size: 2.4rem; /* Adjust font size for subheadings */\r\n    margin-bottom: 0;\r\n    color: #2B2C78;\r\n}\r\n\r\nh3 {\r\n    font-size: 1.3rem; /* Adjust font size for smaller subheadings */\r\n    font-weight: 400;\r\n    color: #2B2C78;\r\n}\r\n\r\n/* Hero Section Styling */\r\n.section_hero {\r\n    padding: 4rem 0; /* Default padding */\r\n    font-size: 1.3rem;\r\n}\r\n\r\n.section_hero p {\r\n    color: #333; /* Adjust as needed */\r\n    font-size: 1.4rem; /* Increased font size for readability */\r\n    margin-top: 1rem;\r\n}\r\n\r\n/* Hero Buttons */\r\n.hero-buttons {\r\n    margin-top: 20px;\r\n}\r\n\r\n.hero-buttons .login-btn {\r\n    background-color: #FF0031; /* Red background */\r\n    color: white;\r\n    font-family: 'Inter', sans-serif;\r\n    margin-right: 10px;\r\n    border: none;\r\n    padding: 10px 20px;\r\n    border-radius: 5px;\r\n    transition: background-color 0.3s;\r\n}\r\n\r\n.hero-buttons .login-btn:hover {\r\n    background-color: #e6002c;\r\n}\r\n\r\n.hero-buttons .signup-btn {\r\n    background-color: transparent;\r\n    border: 2px solid #2B2C78; /* Blue border */\r\n    color: #2B2C78; /* Blue text */\r\n    border-radius: 5px; /* Small radius */\r\n    font-family: 'Inter', sans-serif;\r\n    padding: 8px 18px;\r\n    transition: background-color 0.3s, color 0.3s;\r\n}\r\n\r\n.hero-buttons .signup-btn:hover {\r\n    background-color: #2B2C78;\r\n    color: white;\r\n}\r\n\r\n/* App Description */\r\n#app-description {\r\n    margin-top: 40px;\r\n    padding: 20px;\r\n    background-color: white;\r\n    border-radius: 8px;\r\n    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);\r\n}\r\n\r\n#app-description h2,\r\n#app-description h3 {\r\n    margin-bottom: 10px;\r\n}\r\n\r\n/* Collapsible Task List Styling */\r\n.collapsible-header {\r\n    background-color: white !important; /* Ensure background is white */\r\n    border-bottom: 1px solid #ddd;\r\n    padding: 10px 20px;\r\n}\r\n\r\n.collapsible-body {\r\n    background-color: white;\r\n    padding: 20px;\r\n}\r\n\r\n/* Modals */\r\n.modal {\r\n    border-radius: 8px;\r\n}\r\n\r\n.modal .btn {\r\n    background-color: #FF0031;\r\n    color: white;\r\n    font-family: 'Inter', sans-serif;\r\n}\r\n\r\n.modal .btn:hover {\r\n    background-color: #e6002c;\r\n}\r\n\r\n/* Sidenav (Mobile Navigation) */\r\n.sidenav {\r\n    width: 250px;\r\n    background-color: #f5f5f5;\r\n}\r\n\r\n.sidenav li > a {\r\n    color: #2B2C78;\r\n}\r\n\r\n/* Footer Styling */\r\n.footer {\r\n    background-color: #2B2C78; /* Blue background */\r\n    color: white;\r\n    padding: 20px 0;\r\n    text-align: center;\r\n}\r\n\r\n.footer-logo {\r\n    filter: brightness(0) invert(1); /* Make the logo white */\r\n    max-height: 40px;\r\n    margin-bottom: 10px;\r\n}\r\n\r\n.footer-text {\r\n    font-size: 0.875rem;\r\n    margin: 0;\r\n}\r\n\r\n.footer-link {\r\n    color: #CFD9E3; /* Lighter color for the link */\r\n    text-decoration: underline;\r\n}\r\n\r\n.footer-link:hover {\r\n    color: #ffffff; /* Change color on hover */\r\n}\r\n\r\n/* Utility Classes */\r\n.center-align {\r\n    text-align: center;\r\n}\r\n\r\n.container {\r\n    max-width: 1280px;\r\n    margin: 0 auto;\r\n    padding: 0 15px;\r\n}\r\n"],"sourceRoot":""}]);
+// Exports
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
+
+
+/***/ }),
+
+/***/ "./node_modules/css-loader/dist/runtime/api.js":
+/*!*****************************************************!*\
+  !*** ./node_modules/css-loader/dist/runtime/api.js ***!
+  \*****************************************************/
+/***/ ((module) => {
+
+
+
+/*
+  MIT License http://www.opensource.org/licenses/mit-license.php
+  Author Tobias Koppers @sokra
+*/
+module.exports = function (cssWithMappingToString) {
+  var list = [];
+
+  // return the list of modules as css string
+  list.toString = function toString() {
+    return this.map(function (item) {
+      var content = "";
+      var needLayer = typeof item[5] !== "undefined";
+      if (item[4]) {
+        content += "@supports (".concat(item[4], ") {");
+      }
+      if (item[2]) {
+        content += "@media ".concat(item[2], " {");
+      }
+      if (needLayer) {
+        content += "@layer".concat(item[5].length > 0 ? " ".concat(item[5]) : "", " {");
+      }
+      content += cssWithMappingToString(item);
+      if (needLayer) {
+        content += "}";
+      }
+      if (item[2]) {
+        content += "}";
+      }
+      if (item[4]) {
+        content += "}";
+      }
+      return content;
+    }).join("");
+  };
+
+  // import a list of modules into the list
+  list.i = function i(modules, media, dedupe, supports, layer) {
+    if (typeof modules === "string") {
+      modules = [[null, modules, undefined]];
+    }
+    var alreadyImportedModules = {};
+    if (dedupe) {
+      for (var k = 0; k < this.length; k++) {
+        var id = this[k][0];
+        if (id != null) {
+          alreadyImportedModules[id] = true;
+        }
+      }
+    }
+    for (var _k = 0; _k < modules.length; _k++) {
+      var item = [].concat(modules[_k]);
+      if (dedupe && alreadyImportedModules[item[0]]) {
+        continue;
+      }
+      if (typeof layer !== "undefined") {
+        if (typeof item[5] === "undefined") {
+          item[5] = layer;
+        } else {
+          item[1] = "@layer".concat(item[5].length > 0 ? " ".concat(item[5]) : "", " {").concat(item[1], "}");
+          item[5] = layer;
+        }
+      }
+      if (media) {
+        if (!item[2]) {
+          item[2] = media;
+        } else {
+          item[1] = "@media ".concat(item[2], " {").concat(item[1], "}");
+          item[2] = media;
+        }
+      }
+      if (supports) {
+        if (!item[4]) {
+          item[4] = "".concat(supports);
+        } else {
+          item[1] = "@supports (".concat(item[4], ") {").concat(item[1], "}");
+          item[4] = supports;
+        }
+      }
+      list.push(item);
+    }
+  };
+  return list;
+};
+
+/***/ }),
+
+/***/ "./node_modules/css-loader/dist/runtime/sourceMaps.js":
+/*!************************************************************!*\
+  !*** ./node_modules/css-loader/dist/runtime/sourceMaps.js ***!
+  \************************************************************/
+/***/ ((module) => {
+
+
+
+module.exports = function (item) {
+  var content = item[1];
+  var cssMapping = item[3];
+  if (!cssMapping) {
+    return content;
+  }
+  if (typeof btoa === "function") {
+    var base64 = btoa(unescape(encodeURIComponent(JSON.stringify(cssMapping))));
+    var data = "sourceMappingURL=data:application/json;charset=utf-8;base64,".concat(base64);
+    var sourceMapping = "/*# ".concat(data, " */");
+    return [content].concat([sourceMapping]).join("\n");
+  }
+  return [content].join("\n");
+};
+
+/***/ }),
+
+/***/ "./src/style.css":
+/*!***********************!*\
+  !*** ./src/style.css ***!
+  \***********************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! !../node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js */ "./node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js");
+/* harmony import */ var _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _node_modules_style_loader_dist_runtime_styleDomAPI_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! !../node_modules/style-loader/dist/runtime/styleDomAPI.js */ "./node_modules/style-loader/dist/runtime/styleDomAPI.js");
+/* harmony import */ var _node_modules_style_loader_dist_runtime_styleDomAPI_js__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_dist_runtime_styleDomAPI_js__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _node_modules_style_loader_dist_runtime_insertBySelector_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! !../node_modules/style-loader/dist/runtime/insertBySelector.js */ "./node_modules/style-loader/dist/runtime/insertBySelector.js");
+/* harmony import */ var _node_modules_style_loader_dist_runtime_insertBySelector_js__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_dist_runtime_insertBySelector_js__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var _node_modules_style_loader_dist_runtime_setAttributesWithoutAttributes_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! !../node_modules/style-loader/dist/runtime/setAttributesWithoutAttributes.js */ "./node_modules/style-loader/dist/runtime/setAttributesWithoutAttributes.js");
+/* harmony import */ var _node_modules_style_loader_dist_runtime_setAttributesWithoutAttributes_js__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_dist_runtime_setAttributesWithoutAttributes_js__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var _node_modules_style_loader_dist_runtime_insertStyleElement_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! !../node_modules/style-loader/dist/runtime/insertStyleElement.js */ "./node_modules/style-loader/dist/runtime/insertStyleElement.js");
+/* harmony import */ var _node_modules_style_loader_dist_runtime_insertStyleElement_js__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_dist_runtime_insertStyleElement_js__WEBPACK_IMPORTED_MODULE_4__);
+/* harmony import */ var _node_modules_style_loader_dist_runtime_styleTagTransform_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! !../node_modules/style-loader/dist/runtime/styleTagTransform.js */ "./node_modules/style-loader/dist/runtime/styleTagTransform.js");
+/* harmony import */ var _node_modules_style_loader_dist_runtime_styleTagTransform_js__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_dist_runtime_styleTagTransform_js__WEBPACK_IMPORTED_MODULE_5__);
+/* harmony import */ var _node_modules_css_loader_dist_cjs_js_style_css__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! !!../node_modules/css-loader/dist/cjs.js!./style.css */ "./node_modules/css-loader/dist/cjs.js!./src/style.css");
+
+      
+      
+      
+      
+      
+      
+      
+      
+      
+
+var options = {};
+
+options.styleTagTransform = (_node_modules_style_loader_dist_runtime_styleTagTransform_js__WEBPACK_IMPORTED_MODULE_5___default());
+options.setAttributes = (_node_modules_style_loader_dist_runtime_setAttributesWithoutAttributes_js__WEBPACK_IMPORTED_MODULE_3___default());
+options.insert = _node_modules_style_loader_dist_runtime_insertBySelector_js__WEBPACK_IMPORTED_MODULE_2___default().bind(null, "head");
+options.domAPI = (_node_modules_style_loader_dist_runtime_styleDomAPI_js__WEBPACK_IMPORTED_MODULE_1___default());
+options.insertStyleElement = (_node_modules_style_loader_dist_runtime_insertStyleElement_js__WEBPACK_IMPORTED_MODULE_4___default());
+
+var update = _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0___default()(_node_modules_css_loader_dist_cjs_js_style_css__WEBPACK_IMPORTED_MODULE_6__["default"], options);
+
+
+
+
+       /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_css_loader_dist_cjs_js_style_css__WEBPACK_IMPORTED_MODULE_6__["default"] && _node_modules_css_loader_dist_cjs_js_style_css__WEBPACK_IMPORTED_MODULE_6__["default"].locals ? _node_modules_css_loader_dist_cjs_js_style_css__WEBPACK_IMPORTED_MODULE_6__["default"].locals : undefined);
+
+
+/***/ }),
+
+/***/ "./node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js":
+/*!****************************************************************************!*\
+  !*** ./node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js ***!
+  \****************************************************************************/
+/***/ ((module) => {
+
+
+
+var stylesInDOM = [];
+function getIndexByIdentifier(identifier) {
+  var result = -1;
+  for (var i = 0; i < stylesInDOM.length; i++) {
+    if (stylesInDOM[i].identifier === identifier) {
+      result = i;
+      break;
+    }
+  }
+  return result;
+}
+function modulesToDom(list, options) {
+  var idCountMap = {};
+  var identifiers = [];
+  for (var i = 0; i < list.length; i++) {
+    var item = list[i];
+    var id = options.base ? item[0] + options.base : item[0];
+    var count = idCountMap[id] || 0;
+    var identifier = "".concat(id, " ").concat(count);
+    idCountMap[id] = count + 1;
+    var indexByIdentifier = getIndexByIdentifier(identifier);
+    var obj = {
+      css: item[1],
+      media: item[2],
+      sourceMap: item[3],
+      supports: item[4],
+      layer: item[5]
+    };
+    if (indexByIdentifier !== -1) {
+      stylesInDOM[indexByIdentifier].references++;
+      stylesInDOM[indexByIdentifier].updater(obj);
+    } else {
+      var updater = addElementStyle(obj, options);
+      options.byIndex = i;
+      stylesInDOM.splice(i, 0, {
+        identifier: identifier,
+        updater: updater,
+        references: 1
+      });
+    }
+    identifiers.push(identifier);
+  }
+  return identifiers;
+}
+function addElementStyle(obj, options) {
+  var api = options.domAPI(options);
+  api.update(obj);
+  var updater = function updater(newObj) {
+    if (newObj) {
+      if (newObj.css === obj.css && newObj.media === obj.media && newObj.sourceMap === obj.sourceMap && newObj.supports === obj.supports && newObj.layer === obj.layer) {
+        return;
+      }
+      api.update(obj = newObj);
+    } else {
+      api.remove();
+    }
+  };
+  return updater;
+}
+module.exports = function (list, options) {
+  options = options || {};
+  list = list || [];
+  var lastIdentifiers = modulesToDom(list, options);
+  return function update(newList) {
+    newList = newList || [];
+    for (var i = 0; i < lastIdentifiers.length; i++) {
+      var identifier = lastIdentifiers[i];
+      var index = getIndexByIdentifier(identifier);
+      stylesInDOM[index].references--;
+    }
+    var newLastIdentifiers = modulesToDom(newList, options);
+    for (var _i = 0; _i < lastIdentifiers.length; _i++) {
+      var _identifier = lastIdentifiers[_i];
+      var _index = getIndexByIdentifier(_identifier);
+      if (stylesInDOM[_index].references === 0) {
+        stylesInDOM[_index].updater();
+        stylesInDOM.splice(_index, 1);
+      }
+    }
+    lastIdentifiers = newLastIdentifiers;
+  };
+};
+
+/***/ }),
+
+/***/ "./node_modules/style-loader/dist/runtime/insertBySelector.js":
+/*!********************************************************************!*\
+  !*** ./node_modules/style-loader/dist/runtime/insertBySelector.js ***!
+  \********************************************************************/
+/***/ ((module) => {
+
+
+
+var memo = {};
+
+/* istanbul ignore next  */
+function getTarget(target) {
+  if (typeof memo[target] === "undefined") {
+    var styleTarget = document.querySelector(target);
+
+    // Special case to return head of iframe instead of iframe itself
+    if (window.HTMLIFrameElement && styleTarget instanceof window.HTMLIFrameElement) {
+      try {
+        // This will throw an exception if access to iframe is blocked
+        // due to cross-origin restrictions
+        styleTarget = styleTarget.contentDocument.head;
+      } catch (e) {
+        // istanbul ignore next
+        styleTarget = null;
+      }
+    }
+    memo[target] = styleTarget;
+  }
+  return memo[target];
+}
+
+/* istanbul ignore next  */
+function insertBySelector(insert, style) {
+  var target = getTarget(insert);
+  if (!target) {
+    throw new Error("Couldn't find a style target. This probably means that the value for the 'insert' parameter is invalid.");
+  }
+  target.appendChild(style);
+}
+module.exports = insertBySelector;
+
+/***/ }),
+
+/***/ "./node_modules/style-loader/dist/runtime/insertStyleElement.js":
+/*!**********************************************************************!*\
+  !*** ./node_modules/style-loader/dist/runtime/insertStyleElement.js ***!
+  \**********************************************************************/
+/***/ ((module) => {
+
+
+
+/* istanbul ignore next  */
+function insertStyleElement(options) {
+  var element = document.createElement("style");
+  options.setAttributes(element, options.attributes);
+  options.insert(element, options.options);
+  return element;
+}
+module.exports = insertStyleElement;
+
+/***/ }),
+
+/***/ "./node_modules/style-loader/dist/runtime/setAttributesWithoutAttributes.js":
+/*!**********************************************************************************!*\
+  !*** ./node_modules/style-loader/dist/runtime/setAttributesWithoutAttributes.js ***!
+  \**********************************************************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+
+
+/* istanbul ignore next  */
+function setAttributesWithoutAttributes(styleElement) {
+  var nonce =  true ? __webpack_require__.nc : 0;
+  if (nonce) {
+    styleElement.setAttribute("nonce", nonce);
+  }
+}
+module.exports = setAttributesWithoutAttributes;
+
+/***/ }),
+
+/***/ "./node_modules/style-loader/dist/runtime/styleDomAPI.js":
+/*!***************************************************************!*\
+  !*** ./node_modules/style-loader/dist/runtime/styleDomAPI.js ***!
+  \***************************************************************/
+/***/ ((module) => {
+
+
+
+/* istanbul ignore next  */
+function apply(styleElement, options, obj) {
+  var css = "";
+  if (obj.supports) {
+    css += "@supports (".concat(obj.supports, ") {");
+  }
+  if (obj.media) {
+    css += "@media ".concat(obj.media, " {");
+  }
+  var needLayer = typeof obj.layer !== "undefined";
+  if (needLayer) {
+    css += "@layer".concat(obj.layer.length > 0 ? " ".concat(obj.layer) : "", " {");
+  }
+  css += obj.css;
+  if (needLayer) {
+    css += "}";
+  }
+  if (obj.media) {
+    css += "}";
+  }
+  if (obj.supports) {
+    css += "}";
+  }
+  var sourceMap = obj.sourceMap;
+  if (sourceMap && typeof btoa !== "undefined") {
+    css += "\n/*# sourceMappingURL=data:application/json;base64,".concat(btoa(unescape(encodeURIComponent(JSON.stringify(sourceMap)))), " */");
+  }
+
+  // For old IE
+  /* istanbul ignore if  */
+  options.styleTagTransform(css, styleElement, options.options);
+}
+function removeStyleElement(styleElement) {
+  // istanbul ignore if
+  if (styleElement.parentNode === null) {
+    return false;
+  }
+  styleElement.parentNode.removeChild(styleElement);
+}
+
+/* istanbul ignore next  */
+function domAPI(options) {
+  if (typeof document === "undefined") {
+    return {
+      update: function update() {},
+      remove: function remove() {}
+    };
+  }
+  var styleElement = options.insertStyleElement(options);
+  return {
+    update: function update(obj) {
+      apply(styleElement, options, obj);
+    },
+    remove: function remove() {
+      removeStyleElement(styleElement);
+    }
+  };
+}
+module.exports = domAPI;
+
+/***/ }),
+
+/***/ "./node_modules/style-loader/dist/runtime/styleTagTransform.js":
+/*!*********************************************************************!*\
+  !*** ./node_modules/style-loader/dist/runtime/styleTagTransform.js ***!
+  \*********************************************************************/
+/***/ ((module) => {
+
+
+
+/* istanbul ignore next  */
+function styleTagTransform(css, styleElement) {
+  if (styleElement.styleSheet) {
+    styleElement.styleSheet.cssText = css;
+  } else {
+    while (styleElement.firstChild) {
+      styleElement.removeChild(styleElement.firstChild);
+    }
+    styleElement.appendChild(document.createTextNode(css));
+  }
+}
+module.exports = styleTagTransform;
+
+/***/ }),
+
 /***/ "./node_modules/@firebase/app/dist/esm/index.esm2017.js":
 /*!**************************************************************!*\
   !*** ./node_modules/@firebase/app/dist/esm/index.esm2017.js ***!
@@ -38581,7 +39229,7 @@ function __disposeResources(env) {
 /******/ 		}
 /******/ 		// Create a new module (and put it into the cache)
 /******/ 		var module = __webpack_module_cache__[moduleId] = {
-/******/ 			// no module.id needed
+/******/ 			id: moduleId,
 /******/ 			// no module.loaded needed
 /******/ 			exports: {}
 /******/ 		};
@@ -38594,6 +39242,18 @@ function __disposeResources(env) {
 /******/ 	}
 /******/ 	
 /************************************************************************/
+/******/ 	/* webpack/runtime/compat get default export */
+/******/ 	(() => {
+/******/ 		// getDefaultExport function for compatibility with non-harmony modules
+/******/ 		__webpack_require__.n = (module) => {
+/******/ 			var getter = module && module.__esModule ?
+/******/ 				() => (module['default']) :
+/******/ 				() => (module);
+/******/ 			__webpack_require__.d(getter, { a: getter });
+/******/ 			return getter;
+/******/ 		};
+/******/ 	})();
+/******/ 	
 /******/ 	/* webpack/runtime/define property getters */
 /******/ 	(() => {
 /******/ 		// define getter functions for harmony exports
@@ -38634,15 +39294,24 @@ function __disposeResources(env) {
 /******/ 		};
 /******/ 	})();
 /******/ 	
+/******/ 	/* webpack/runtime/nonce */
+/******/ 	(() => {
+/******/ 		__webpack_require__.nc = undefined;
+/******/ 	})();
+/******/ 	
 /************************************************************************/
 var __webpack_exports__ = {};
 /*!**********************!*\
   !*** ./src/index.js ***!
   \**********************/
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var firebase_app__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! firebase/app */ "./node_modules/firebase/app/dist/esm/index.esm.js");
-/* harmony import */ var firebase_auth__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! firebase/auth */ "./node_modules/firebase/auth/dist/esm/index.esm.js");
-/* harmony import */ var firebase_firestore__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! firebase/firestore */ "./node_modules/firebase/firestore/dist/esm/index.esm.js");
+/* harmony import */ var _style_css__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./style.css */ "./src/style.css");
+/* harmony import */ var firebase_app__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! firebase/app */ "./node_modules/firebase/app/dist/esm/index.esm.js");
+/* harmony import */ var firebase_auth__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! firebase/auth */ "./node_modules/firebase/auth/dist/esm/index.esm.js");
+/* harmony import */ var firebase_firestore__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! firebase/firestore */ "./node_modules/firebase/firestore/dist/esm/index.esm.js");
+// Import Style.css
+
+
 // Import Firebase modules
 
 
@@ -38660,9 +39329,9 @@ var firebaseConfig = {
 };
 
 // Initialize Firebase
-var app = (0,firebase_app__WEBPACK_IMPORTED_MODULE_0__.initializeApp)(firebaseConfig);
-var auth = (0,firebase_auth__WEBPACK_IMPORTED_MODULE_1__.getAuth)(app);
-var db = (0,firebase_firestore__WEBPACK_IMPORTED_MODULE_2__.getFirestore)(app);
+var app = (0,firebase_app__WEBPACK_IMPORTED_MODULE_1__.initializeApp)(firebaseConfig);
+var auth = (0,firebase_auth__WEBPACK_IMPORTED_MODULE_2__.getAuth)(app);
+var db = (0,firebase_firestore__WEBPACK_IMPORTED_MODULE_3__.getFirestore)(app);
 
 // Ensure Firebase is set up correctly
 console.log("Firebase initialized successfully:", app);
@@ -38679,30 +39348,30 @@ document.addEventListener("DOMContentLoaded", function () {
     var collapsibles = document.querySelectorAll(".collapsible");
     M.Collapsible.init(collapsibles);
 
-    // Initialize side navigation
-    var sidenav = document.querySelectorAll(".sidenav");
-    M.Sidenav.init(sidenav);
+    // Initialize sidenav
+    var sideNavs = document.querySelectorAll('.sidenav');
+    M.Sidenav.init(sideNavs, {
+      edge: 'right'
+    });
     console.log("Materialize components initialized successfully.");
   } else {
     console.error("Materialize library is not loaded. Please ensure Materialize JavaScript is loaded before the bundle.");
   }
 
   // Listen for auth state changes
-  (0,firebase_auth__WEBPACK_IMPORTED_MODULE_1__.onAuthStateChanged)(auth, function (user) {
+  (0,firebase_auth__WEBPACK_IMPORTED_MODULE_2__.onAuthStateChanged)(auth, function (user) {
     var taskList = document.querySelector(".tasks");
     if (user) {
+      // Hide the app description immediately if the user is logged in
+      var _appDescription = document.getElementById('app-description');
+      if (_appDescription) _appDescription.style.display = 'none';
+
       // Fetch and display tasks in real-time
-      var taskCollection = (0,firebase_firestore__WEBPACK_IMPORTED_MODULE_2__.collection)(db, "tasks");
+      var taskCollection = (0,firebase_firestore__WEBPACK_IMPORTED_MODULE_3__.collection)(db, "tasks");
       try {
-        (0,firebase_firestore__WEBPACK_IMPORTED_MODULE_2__.onSnapshot)(taskCollection, function (snapshot) {
-          console.log("Firestore snapshot:", snapshot);
-          if (!snapshot.empty) {
-            setupTasks(snapshot.docs);
-            setupUI(user);
-          } else {
-            setupTasks([]);
-            setupUI(user);
-          }
+        (0,firebase_firestore__WEBPACK_IMPORTED_MODULE_3__.onSnapshot)(taskCollection, function (snapshot) {
+          setupTasks(snapshot.docs);
+          setupUI(user);
         }, function (error) {
           // Handle the Firestore permission error when the user is logged out
           if (error.code === "permission-denied") {
@@ -38722,9 +39391,9 @@ document.addEventListener("DOMContentLoaded", function () {
       console.log("User logged out");
       setupUI(); // Update UI when logged out
 
-      // Display a message prompting the user to log in to view tasks with a GIF
+      // Hide the task list when logged out
       if (taskList) {
-        taskList.innerHTML = "\n          <li class=\"collection-item center-align\" style=\"font-size: 18px; padding: 20px;\">\n            <p style=\"font-size: 1.2em; margin-top: 10px;\">\n              <a href=\"#\" class=\"modal-trigger\" data-target=\"modal-login\" style=\"color: #2B2C78; font-weight: bold; margin-right: 5px;\">Login</a> \n              or \n              <a href=\"#\" class=\"modal-trigger\" data-target=\"modal-signup\" style=\"color: #2B2C78; font-weight: bold; margin-left: 5px; margin-right: 5px\">Sign Up</a>\n              to view available tasks.\n            </p>\n            <img src=\"https://i.giphy.com/media/v1.Y2lkPTc5MGI3NjExMWRuN2M4YWg4MDAyN2xkNjd6ZGRtbXoxcDRhd3ZqdXhyM3pwcHBtMyZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9dg/bWGugCywc1x28wgqeC/giphy.gif\" alt=\"Login Required\" style=\"max-width: 100%; height: auto; margin-top: 20px;\">\n          </li>\n        ";
+        taskList.innerHTML = '';
       }
     }
   });
@@ -38741,7 +39410,7 @@ document.addEventListener("DOMContentLoaded", function () {
       var fee = createForm.querySelector("#fee").value;
 
       // Add the task to Firestore
-      (0,firebase_firestore__WEBPACK_IMPORTED_MODULE_2__.addDoc)((0,firebase_firestore__WEBPACK_IMPORTED_MODULE_2__.collection)(db, "tasks"), {
+      (0,firebase_firestore__WEBPACK_IMPORTED_MODULE_3__.addDoc)((0,firebase_firestore__WEBPACK_IMPORTED_MODULE_3__.collection)(db, "tasks"), {
         title: title,
         description: description,
         fee: fee
@@ -38780,7 +39449,7 @@ document.addEventListener("DOMContentLoaded", function () {
       e.preventDefault();
       var email = signupForm["signup-email"].value;
       var password = signupForm["signup-password"].value;
-      (0,firebase_auth__WEBPACK_IMPORTED_MODULE_1__.createUserWithEmailAndPassword)(auth, email, password).then(function (cred) {
+      (0,firebase_auth__WEBPACK_IMPORTED_MODULE_2__.createUserWithEmailAndPassword)(auth, email, password).then(function (cred) {
         var modal = document.querySelector("#modal-signup");
         if (modal) {
           M.Modal.getInstance(modal).close();
@@ -38796,22 +39465,20 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 
   // Logout
-  var logout = document.querySelectorAll("#logout");
-  if (logout) {
-    logout.forEach(function (btn) {
-      btn.addEventListener("click", function (e) {
-        e.preventDefault();
-        (0,firebase_auth__WEBPACK_IMPORTED_MODULE_1__.signOut)(auth).then(function () {
-          console.log("User signed out successfully.");
-        })["catch"](function (error) {
-          M.toast({
-            html: "Error: ".concat(error.message),
-            classes: "red darken-1"
-          });
+  var logoutButtons = document.querySelectorAll("#logout, #logout-mobile");
+  logoutButtons.forEach(function (button) {
+    button.addEventListener("click", function (e) {
+      e.preventDefault();
+      (0,firebase_auth__WEBPACK_IMPORTED_MODULE_2__.signOut)(auth).then(function () {
+        console.log("User signed out successfully.");
+      })["catch"](function (error) {
+        M.toast({
+          html: "Error: ".concat(error.message),
+          classes: "red darken-1"
         });
       });
     });
-  }
+  });
 
   // Login
   var loginForm = document.querySelector("#login-form");
@@ -38820,7 +39487,7 @@ document.addEventListener("DOMContentLoaded", function () {
       e.preventDefault();
       var email = loginForm["login-email"].value;
       var password = loginForm["login-password"].value;
-      (0,firebase_auth__WEBPACK_IMPORTED_MODULE_1__.signInWithEmailAndPassword)(auth, email, password).then(function (cred) {
+      (0,firebase_auth__WEBPACK_IMPORTED_MODULE_2__.signInWithEmailAndPassword)(auth, email, password).then(function (cred) {
         var modal = document.querySelector("#modal-login");
         if (modal) {
           M.Modal.getInstance(modal).close();
@@ -38836,47 +39503,37 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 });
 
-// Select elements for UI updates
+// Update the UI based upon login status
 var loggedOutLinks = document.querySelectorAll(".logged-out");
 var loggedInLinks = document.querySelectorAll(".logged-in");
 var accountDetails = document.querySelector(".account-details");
 var appDescription = document.querySelector("#app-description");
-
-// Update the UI based upon login status
 var setupUI = function setupUI(user) {
   if (user) {
+    // Ensure the app description is hidden if the user is logged in
+    if (appDescription) appDescription.style.display = 'none';
+
     // Account info
     var html = "\n      <div>Logged in as ".concat(user.email, "</div>\n    ");
     accountDetails.innerHTML = html;
-
-    // Show logged-in links and hide logged-out links
     loggedInLinks.forEach(function (item) {
       return item.style.display = "block";
     });
     loggedOutLinks.forEach(function (item) {
       return item.style.display = "none";
     });
-
-    // Hide the app description when logged in
-    if (appDescription) {
-      appDescription.style.display = "none";
-    }
   } else {
+    // Show the app description when logged out
+    if (appDescription) appDescription.style.display = 'block';
+
     // Hide account info
     accountDetails.innerHTML = "";
-
-    // Show logged-out links and hide logged-in links
     loggedInLinks.forEach(function (item) {
       return item.style.display = "none";
     });
     loggedOutLinks.forEach(function (item) {
       return item.style.display = "block";
     });
-
-    // Show the app description when logged out
-    if (appDescription) {
-      appDescription.style.display = "block";
-    }
   }
 };
 
@@ -38893,7 +39550,7 @@ var setupTasks = function setupTasks() {
     var title = task.title || "No title";
     var description = task.description || "No description available";
     var fee = task.fee !== undefined ? "$".concat(task.fee) : "No fee specified";
-    var li = "\n      <li>\n        <div class=\"collapsible-header grey lighten-4\">".concat(title, "</div>\n        <div class=\"collapsible-body white\">").concat(description, "</div>\n        <div class=\"collapsible-body white\">").concat(fee, "</div>\n      </li>\n    ");
+    var li = "\n      <li>\n        <div class=\"collapsible-header\">".concat(title, "</div>\n        <div class=\"collapsible-body\">").concat(description, "</div>\n        <div class=\"collapsible-body\">").concat(fee, "</div>\n      </li>\n    ");
     html += li;
   });
   var taskList = document.querySelector(".tasks");
@@ -38912,7 +39569,7 @@ var addTaskToDOM = function addTaskToDOM(task) {
   var description = task.description || "No description available";
   var fee = task.fee !== undefined ? "$".concat(task.fee) : "No fee specified";
   var li = document.createElement("li");
-  li.innerHTML = "\n    <div class=\"collapsible-header grey lighten-4\">".concat(title, "</div>\n    <div class=\"collapsible-body white\">").concat(description, "</div>\n    <div class=\"collapsible-body white\">").concat(fee, "</div>\n  ");
+  li.innerHTML = "\n    <div class=\"collapsible-header\">".concat(title, "</div>\n    <div class=\"collapsible-body\">").concat(description, "</div>\n    <div class=\"collapsible-body\">").concat(fee, "</div>\n  ");
   if (taskList) {
     taskList.prepend(li); // Adds the new task to the top of the list
     M.Collapsible.init(document.querySelectorAll(".collapsible"));

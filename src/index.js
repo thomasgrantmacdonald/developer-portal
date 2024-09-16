@@ -1,3 +1,7 @@
+// Import Style.css
+import './style.css';
+
+
 // Import Firebase modules
 import { initializeApp } from "firebase/app";
 import {
@@ -8,6 +12,7 @@ import {
   onAuthStateChanged,
 } from "firebase/auth";
 import { getFirestore, collection, getDocs, addDoc, onSnapshot } from "firebase/firestore";
+
 
 // Firebase configuration
 const firebaseConfig = {
@@ -40,9 +45,9 @@ document.addEventListener("DOMContentLoaded", function () {
     const collapsibles = document.querySelectorAll(".collapsible");
     M.Collapsible.init(collapsibles);
 
-    // Initialize side navigation
-    const sidenav = document.querySelectorAll(".sidenav");
-    M.Sidenav.init(sidenav);
+    // Initialize sidenav
+    const sideNavs = document.querySelectorAll('.sidenav');
+    M.Sidenav.init(sideNavs, { edge: 'right' });
 
     console.log("Materialize components initialized successfully.");
   } else {
@@ -56,20 +61,18 @@ document.addEventListener("DOMContentLoaded", function () {
     const taskList = document.querySelector(".tasks");
 
     if (user) {
+      // Hide the app description immediately if the user is logged in
+      const appDescription = document.getElementById('app-description');
+      if (appDescription) appDescription.style.display = 'none';
+
       // Fetch and display tasks in real-time
       const taskCollection = collection(db, "tasks");
       try {
         onSnapshot(
           taskCollection,
           (snapshot) => {
-            console.log("Firestore snapshot:", snapshot);
-            if (!snapshot.empty) {
-              setupTasks(snapshot.docs);
-              setupUI(user);
-            } else {
-              setupTasks([]);
-              setupUI(user);
-            }
+            setupTasks(snapshot.docs);
+            setupUI(user);
           },
           (error) => {
             // Handle the Firestore permission error when the user is logged out
@@ -87,28 +90,15 @@ document.addEventListener("DOMContentLoaded", function () {
           }
         );
       } catch (error) {
-        console.error(
-          "Error while setting up Firestore listener:",
-          error.message
-        );
+        console.error("Error while setting up Firestore listener:", error.message);
       }
     } else {
       console.log("User logged out");
       setupUI(); // Update UI when logged out
 
-      // Display a message prompting the user to log in to view tasks with a GIF
+      // Hide the task list when logged out
       if (taskList) {
-        taskList.innerHTML = `
-          <li class="collection-item center-align" style="font-size: 18px; padding: 20px;">
-            <p style="font-size: 1.2em; margin-top: 10px;">
-              <a href="#" class="modal-trigger" data-target="modal-login" style="color: #2B2C78; font-weight: bold; margin-right: 5px;">Login</a> 
-              or 
-              <a href="#" class="modal-trigger" data-target="modal-signup" style="color: #2B2C78; font-weight: bold; margin-left: 5px; margin-right: 5px">Sign Up</a>
-              to view available tasks.
-            </p>
-            <img src="https://i.giphy.com/media/v1.Y2lkPTc5MGI3NjExMWRuN2M4YWg4MDAyN2xkNjd6ZGRtbXoxcDRhd3ZqdXhyM3pwcHBtMyZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9dg/bWGugCywc1x28wgqeC/giphy.gif" alt="Login Required" style="max-width: 100%; height: auto; margin-top: 20px;">
-          </li>
-        `;
+        taskList.innerHTML = '';
       }
     }
   });
@@ -180,24 +170,22 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 
   // Logout
-  const logout = document.querySelectorAll("#logout");
-  if (logout) {
-    logout.forEach((btn) => {
-      btn.addEventListener("click", (e) => {
-        e.preventDefault();
-        signOut(auth)
-          .then(() => {
-            console.log("User signed out successfully.");
-          })
-          .catch((error) => {
-            M.toast({
-              html: `Error: ${error.message}`,
-              classes: "red darken-1",
-            });
+  const logoutButtons = document.querySelectorAll("#logout, #logout-mobile");
+  logoutButtons.forEach(button => {
+    button.addEventListener("click", (e) => {
+      e.preventDefault();
+      signOut(auth)
+        .then(() => {
+          console.log("User signed out successfully.");
+        })
+        .catch((error) => {
+          M.toast({
+            html: `Error: ${error.message}`,
+            classes: "red darken-1",
           });
-      });
+        });
     });
-  }
+  });
 
   // Login
   const loginForm = document.querySelector("#login-form");
@@ -225,41 +213,34 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 });
 
-// Select elements for UI updates
+// Update the UI based upon login status
 const loggedOutLinks = document.querySelectorAll(".logged-out");
 const loggedInLinks = document.querySelectorAll(".logged-in");
 const accountDetails = document.querySelector(".account-details");
 const appDescription = document.querySelector("#app-description");
 
-// Update the UI based upon login status
 const setupUI = (user) => {
   if (user) {
+    // Ensure the app description is hidden if the user is logged in
+    if (appDescription) appDescription.style.display = 'none';
+
     // Account info
     const html = `
       <div>Logged in as ${user.email}</div>
     `;
     accountDetails.innerHTML = html;
 
-    // Show logged-in links and hide logged-out links
     loggedInLinks.forEach((item) => (item.style.display = "block"));
     loggedOutLinks.forEach((item) => (item.style.display = "none"));
-
-    // Hide the app description when logged in
-    if (appDescription) {
-      appDescription.style.display = "none";
-    }
   } else {
+    // Show the app description when logged out
+    if (appDescription) appDescription.style.display = 'block';
+
     // Hide account info
     accountDetails.innerHTML = "";
 
-    // Show logged-out links and hide logged-in links
     loggedInLinks.forEach((item) => (item.style.display = "none"));
     loggedOutLinks.forEach((item) => (item.style.display = "block"));
-
-    // Show the app description when logged out
-    if (appDescription) {
-      appDescription.style.display = "block";
-    }
   }
 };
 
@@ -279,9 +260,9 @@ const setupTasks = (data = []) => {
 
     const li = `
       <li>
-        <div class="collapsible-header grey lighten-4">${title}</div>
-        <div class="collapsible-body white">${description}</div>
-        <div class="collapsible-body white">${fee}</div>
+        <div class="collapsible-header">${title}</div>
+        <div class="collapsible-body">${description}</div>
+        <div class="collapsible-body">${fee}</div>
       </li>
     `;
     html += li;
@@ -305,9 +286,9 @@ const addTaskToDOM = (task) => {
 
   const li = document.createElement("li");
   li.innerHTML = `
-    <div class="collapsible-header grey lighten-4">${title}</div>
-    <div class="collapsible-body white">${description}</div>
-    <div class="collapsible-body white">${fee}</div>
+    <div class="collapsible-header">${title}</div>
+    <div class="collapsible-body">${description}</div>
+    <div class="collapsible-body">${fee}</div>
   `;
 
   if (taskList) {

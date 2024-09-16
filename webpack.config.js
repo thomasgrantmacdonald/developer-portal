@@ -18,6 +18,10 @@ module.exports = {
           },
         },
       },
+      {
+        test: /\.css$/, // Handle CSS files
+        use: ['style-loader', 'css-loader'], // Inject CSS into the DOM and resolve @import and url() 
+      },
     ],
   },
   devtool: 'source-map', // Generate source maps for easier debugging
