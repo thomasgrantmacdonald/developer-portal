@@ -1,5 +1,3 @@
-// index.js
-
 // Import Firebase modules
 import { initializeApp } from "firebase/app";
 import {
@@ -9,7 +7,7 @@ import {
   signOut,
   onAuthStateChanged,
 } from "firebase/auth";
-import { getFirestore, collection, getDocs } from "firebase/firestore";
+import { getFirestore, collection, getDocs, addDoc, onSnapshot } from "firebase/firestore";
 
 // Firebase configuration
 const firebaseConfig = {
@@ -51,42 +49,128 @@ document.addEventListener("DOMContentLoaded", function () {
 
   // Listen for auth state changes
   onAuthStateChanged(auth, (user) => {
+    const taskList = document.querySelector(".tasks");
+    console.log(user);
+
     if (user) {
-      console.log("User logged in: ", user);
+      // Fetch and display tasks in real-time
+      const taskCollection = collection(db, "tasks");
+      try {
+        onSnapshot(
+          taskCollection,
+          (snapshot) => {
+            console.log("Firestore snapshot:", snapshot);
+            if (!snapshot.empty) {
+              setupTasks(snapshot.docs);
+              setupUI(user);
+            } else {
+              setupTasks([]);
+              setupUI(user);
+            }
+          },
+          (error) => {
+            // Handle the Firestore permission error when the user is logged out
+            if (error.code === "permission-denied") {
+              console.log(
+                "Permission denied: Unable to access Firestore without authentication."
+              );
+            } else {
+              console.error("Error in snapshot listener:", error.message);
+              M.toast({
+                html: `Error: ${error.message}`,
+                classes: "red darken-1",
+              });
+            }
+          }
+        );
+      } catch (error) {
+        console.error("Error while setting up Firestore listener:", error.message);
+      }
     } else {
       console.log("User logged out");
+      setupUI(); // Update UI when logged out
+
+      // Display a message prompting the user to log in to view tasks with a GIF
+      if (taskList) {
+        taskList.innerHTML = `
+          <li class="collection-item center-align" style="font-size: 18px; padding: 20px;">
+            <p style="font-size: 1.2em; margin-top: 10px;">
+              <a href="#" class="modal-trigger" data-target="modal-login" style="color: #2B2C78; font-weight: bold; margin-right: 5px;">Login</a> 
+              or 
+              <a href="#" class="modal-trigger" data-target="modal-signup" style="color: #2B2C78; font-weight: bold; margin-left: 5px; margin-right: 5px">Sign Up</a>
+              to view available tasks.
+            </p>
+            <img src="https://i.giphy.com/media/v1.Y2lkPTc5MGI3NjExMWRuN2M4YWg4MDAyN2xkNjd6ZGRtbXoxcDRhd3ZqdXhyM3pwcHBtMyZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9dg/bWGugCywc1x28wgqeC/giphy.gif" alt="Login Required" style="max-width: 100%; height: auto; margin-top: 20px;">
+          </li>
+        `;
+      }
     }
   });
+
+  // Create new task
+  const createForm = document.querySelector("#create-form");
+  if (createForm) {
+    createForm.addEventListener("submit", (e) => {
+      e.preventDefault();
+
+      // Access form fields correctly
+      const title = createForm.querySelector("#title").value;
+      const description = createForm.querySelector("#description").value;
+      const fee = createForm.querySelector("#fee").value;
+
+      // Add the task to Firestore
+      addDoc(collection(db, "tasks"), {
+        title: title,
+        description: description,
+        fee: fee,
+      })
+        .then((docRef) => {
+          // Manually add the task to the DOM immediately
+          addTaskToDOM({ title, description, fee, id: docRef.id });
+
+          // Close the modal and reset the form
+          const modal = document.querySelector("#modal-create");
+          if (modal) {
+            M.Modal.getInstance(modal).close();
+          }
+          createForm.reset();
+          console.log("Task added successfully.");
+        })
+        .catch((error) => {
+          console.error("Error adding task:", error.message);
+          M.toast({
+            html: `Error: ${error.message}`,
+            classes: "red darken-1",
+          });
+        });
+    });
+  } else {
+    console.error("Create form not found. Please check the form ID.");
+  }
 
   // Signup form handling
   const signupForm = document.querySelector("#signup-form");
   if (signupForm) {
-    console.log("Signup form found and event listener attached.");
     signupForm.addEventListener("submit", (e) => {
       e.preventDefault();
-      console.log("Signup form submitted");
-
-      // Get user info
       const email = signupForm["signup-email"].value;
       const password = signupForm["signup-password"].value;
-      console.log(email, password);
 
-      // Sign up the user
       createUserWithEmailAndPassword(auth, email, password)
         .then((cred) => {
-          console.log("User created:", cred.user);
           const modal = document.querySelector("#modal-signup");
           if (modal) {
             M.Modal.getInstance(modal).close();
           }
-          signupForm.reset(); // Reset the form only after successful signup
+          signupForm.reset();
         })
         .catch((error) => {
-          console.error("Error signing up:", error.message);
+          M.toast({
+            html: `Error: ${error.message}`,
+            classes: "red darken-1",
+          });
         });
     });
-  } else {
-    console.error("Signup form not found. Please check the form ID.");
   }
 
   // Logout
@@ -99,7 +183,10 @@ document.addEventListener("DOMContentLoaded", function () {
           console.log("User signed out successfully.");
         })
         .catch((error) => {
-          console.error("Error signing out:", error.message);
+          M.toast({
+            html: `Error: ${error.message}`,
+            classes: "red darken-1",
+          });
         });
     });
   }
@@ -109,15 +196,11 @@ document.addEventListener("DOMContentLoaded", function () {
   if (loginForm) {
     loginForm.addEventListener("submit", (e) => {
       e.preventDefault();
-
-      // Get user info
       const email = loginForm["login-email"].value;
       const password = loginForm["login-password"].value;
 
       signInWithEmailAndPassword(auth, email, password)
         .then((cred) => {
-          console.log("User signed in:", cred.user);
-          // Close the login modal and reset the form
           const modal = document.querySelector("#modal-login");
           if (modal) {
             M.Modal.getInstance(modal).close();
@@ -125,41 +208,49 @@ document.addEventListener("DOMContentLoaded", function () {
           loginForm.reset();
         })
         .catch((error) => {
-          console.error("Error signing in:", error.message);
+          M.toast({
+            html: `Error: ${error.message}`,
+            classes: "red darken-1",
+          });
         });
     });
   }
-
-  // Get data from Firestore and setup tasks
-  const taskCollection = collection(db, "tasks");
-  getDocs(taskCollection)
-    .then((snapshot) => {
-      console.log("Firestore snapshot:", snapshot); // Log the entire snapshot
-      if (!snapshot.empty) {
-        setupTasks(snapshot.docs);
-      } else {
-        console.log("No tasks found.");
-      }
-    })
-    .catch((error) => {
-      console.error("Error getting tasks:", error.message);
-    });
 });
 
-// Setup tasks function to render tasks on the page
-const setupTasks = (data) => {
-  let html = "";
-  console.log("Rendering tasks...");
+// Update the UI based upon login status
+const loggedOutLinks = document.querySelectorAll(".logged-out");
+const loggedInLinks = document.querySelectorAll(".logged-in");
+const accountDetails = document.querySelector(".account-details");
 
-  if (data.length === 0) {
+const setupUI = (user) => {
+  if (user) {
+    // Account info
+    const html = `
+      <div>Logged in as ${user.email}</div>
+    `;
+    accountDetails.innerHTML = html;
+
+    loggedInLinks.forEach((item) => (item.style.display = "block"));
+    loggedOutLinks.forEach((item) => (item.style.display = "none"));
+  } else {
+    // Hide account info
+    accountDetails.innerHTML = "";
+
+    loggedInLinks.forEach((item) => (item.style.display = "none"));
+    loggedOutLinks.forEach((item) => (item.style.display = "block"));
+  }
+};
+
+// Setup tasks function to render tasks on the page
+const setupTasks = (data = []) => {
+  let html = "";
+  if (!Array.isArray(data) || data.length === 0) {
     console.log("No tasks found in data.");
+    return;
   }
 
   data.forEach((doc) => {
     const task = doc.data();
-    console.log("Task data:", task);
-
-    // Ensure task fields are available
     const title = task.title || "No title";
     const description = task.description || "No description available";
     const fee = task.fee !== undefined ? `$${task.fee}` : "No fee specified";
@@ -174,15 +265,32 @@ const setupTasks = (data) => {
     html += li;
   });
 
-  // Render the tasks in the collapsible list
   const taskList = document.querySelector(".tasks");
   if (taskList) {
     taskList.innerHTML = html;
-    console.log("Tasks rendered successfully.");
+    M.Collapsible.init(document.querySelectorAll(".collapsible"));
+  } else {
+    console.error("Task list element not found.");
+  }
+};
 
-    // Re-initialize Materialize CSS collapsible component
-    const collapsibles = document.querySelectorAll(".collapsible");
-    M.Collapsible.init(collapsibles);
+// Function to add a task directly to the DOM
+const addTaskToDOM = (task) => {
+  const taskList = document.querySelector(".tasks");
+  const title = task.title || "No title";
+  const description = task.description || "No description available";
+  const fee = task.fee !== undefined ? `$${task.fee}` : "No fee specified";
+
+  const li = document.createElement("li");
+  li.innerHTML = `
+    <div class="collapsible-header grey lighten-4">${title}</div>
+    <div class="collapsible-body white">${description}</div>
+    <div class="collapsible-body white">${fee}</div>
+  `;
+
+  if (taskList) {
+    taskList.prepend(li); // Adds the new task to the top of the list
+    M.Collapsible.init(document.querySelectorAll(".collapsible"));
   } else {
     console.error("Task list element not found.");
   }

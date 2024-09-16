@@ -38643,8 +38643,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var firebase_app__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! firebase/app */ "./node_modules/firebase/app/dist/esm/index.esm.js");
 /* harmony import */ var firebase_auth__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! firebase/auth */ "./node_modules/firebase/auth/dist/esm/index.esm.js");
 /* harmony import */ var firebase_firestore__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! firebase/firestore */ "./node_modules/firebase/firestore/dist/esm/index.esm.js");
-// index.js
-
 // Import Firebase modules
 
 
@@ -38687,40 +38685,111 @@ document.addEventListener("DOMContentLoaded", function () {
 
   // Listen for auth state changes
   (0,firebase_auth__WEBPACK_IMPORTED_MODULE_1__.onAuthStateChanged)(auth, function (user) {
+    var taskList = document.querySelector(".tasks");
+    console.log(user);
     if (user) {
-      console.log("User logged in: ", user);
+      // Fetch and display tasks in real-time
+      var taskCollection = (0,firebase_firestore__WEBPACK_IMPORTED_MODULE_2__.collection)(db, "tasks");
+      try {
+        (0,firebase_firestore__WEBPACK_IMPORTED_MODULE_2__.onSnapshot)(taskCollection, function (snapshot) {
+          console.log("Firestore snapshot:", snapshot);
+          if (!snapshot.empty) {
+            setupTasks(snapshot.docs);
+            setupUI(user);
+          } else {
+            setupTasks([]);
+            setupUI(user);
+          }
+        }, function (error) {
+          // Handle the Firestore permission error when the user is logged out
+          if (error.code === "permission-denied") {
+            console.log("Permission denied: Unable to access Firestore without authentication.");
+          } else {
+            console.error("Error in snapshot listener:", error.message);
+            M.toast({
+              html: "Error: ".concat(error.message),
+              classes: "red darken-1"
+            });
+          }
+        });
+      } catch (error) {
+        console.error("Error while setting up Firestore listener:", error.message);
+      }
     } else {
       console.log("User logged out");
+      setupUI(); // Update UI when logged out
+
+      // Display a message prompting the user to log in to view tasks with a GIF
+      if (taskList) {
+        taskList.innerHTML = "\n          <li class=\"collection-item center-align\" style=\"font-size: 18px; padding: 20px;\">\n            <p style=\"font-size: 1.2em; margin-top: 10px;\">\n              <a href=\"#\" class=\"modal-trigger\" data-target=\"modal-login\" style=\"color: #2B2C78; font-weight: bold; margin-right: 5px;\">Login</a> \n              or \n              <a href=\"#\" class=\"modal-trigger\" data-target=\"modal-signup\" style=\"color: #2B2C78; font-weight: bold; margin-left: 5px; margin-right: 5px\">Sign Up</a>\n              to view available tasks.\n            </p>\n            <img src=\"https://i.giphy.com/media/v1.Y2lkPTc5MGI3NjExMWRuN2M4YWg4MDAyN2xkNjd6ZGRtbXoxcDRhd3ZqdXhyM3pwcHBtMyZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9dg/bWGugCywc1x28wgqeC/giphy.gif\" alt=\"Login Required\" style=\"max-width: 100%; height: auto; margin-top: 20px;\">\n          </li>\n        ";
+      }
     }
   });
+
+  // Create new task
+  var createForm = document.querySelector("#create-form");
+  if (createForm) {
+    createForm.addEventListener("submit", function (e) {
+      e.preventDefault();
+
+      // Access form fields correctly
+      var title = createForm.querySelector("#title").value;
+      var description = createForm.querySelector("#description").value;
+      var fee = createForm.querySelector("#fee").value;
+
+      // Add the task to Firestore
+      (0,firebase_firestore__WEBPACK_IMPORTED_MODULE_2__.addDoc)((0,firebase_firestore__WEBPACK_IMPORTED_MODULE_2__.collection)(db, "tasks"), {
+        title: title,
+        description: description,
+        fee: fee
+      }).then(function (docRef) {
+        // Manually add the task to the DOM immediately
+        addTaskToDOM({
+          title: title,
+          description: description,
+          fee: fee,
+          id: docRef.id
+        });
+
+        // Close the modal and reset the form
+        var modal = document.querySelector("#modal-create");
+        if (modal) {
+          M.Modal.getInstance(modal).close();
+        }
+        createForm.reset();
+        console.log("Task added successfully.");
+      })["catch"](function (error) {
+        console.error("Error adding task:", error.message);
+        M.toast({
+          html: "Error: ".concat(error.message),
+          classes: "red darken-1"
+        });
+      });
+    });
+  } else {
+    console.error("Create form not found. Please check the form ID.");
+  }
 
   // Signup form handling
   var signupForm = document.querySelector("#signup-form");
   if (signupForm) {
-    console.log("Signup form found and event listener attached.");
     signupForm.addEventListener("submit", function (e) {
       e.preventDefault();
-      console.log("Signup form submitted");
-
-      // Get user info
       var email = signupForm["signup-email"].value;
       var password = signupForm["signup-password"].value;
-      console.log(email, password);
-
-      // Sign up the user
       (0,firebase_auth__WEBPACK_IMPORTED_MODULE_1__.createUserWithEmailAndPassword)(auth, email, password).then(function (cred) {
-        console.log("User created:", cred.user);
         var modal = document.querySelector("#modal-signup");
         if (modal) {
           M.Modal.getInstance(modal).close();
         }
-        signupForm.reset(); // Reset the form only after successful signup
+        signupForm.reset();
       })["catch"](function (error) {
-        console.error("Error signing up:", error.message);
+        M.toast({
+          html: "Error: ".concat(error.message),
+          classes: "red darken-1"
+        });
       });
     });
-  } else {
-    console.error("Signup form not found. Please check the form ID.");
   }
 
   // Logout
@@ -38731,7 +38800,10 @@ document.addEventListener("DOMContentLoaded", function () {
       (0,firebase_auth__WEBPACK_IMPORTED_MODULE_1__.signOut)(auth).then(function () {
         console.log("User signed out successfully.");
       })["catch"](function (error) {
-        console.error("Error signing out:", error.message);
+        M.toast({
+          html: "Error: ".concat(error.message),
+          classes: "red darken-1"
+        });
       });
     });
   }
@@ -38741,66 +38813,87 @@ document.addEventListener("DOMContentLoaded", function () {
   if (loginForm) {
     loginForm.addEventListener("submit", function (e) {
       e.preventDefault();
-
-      // Get user info
       var email = loginForm["login-email"].value;
       var password = loginForm["login-password"].value;
       (0,firebase_auth__WEBPACK_IMPORTED_MODULE_1__.signInWithEmailAndPassword)(auth, email, password).then(function (cred) {
-        console.log("User signed in:", cred.user);
-        // Close the login modal and reset the form
         var modal = document.querySelector("#modal-login");
         if (modal) {
           M.Modal.getInstance(modal).close();
         }
         loginForm.reset();
       })["catch"](function (error) {
-        console.error("Error signing in:", error.message);
+        M.toast({
+          html: "Error: ".concat(error.message),
+          classes: "red darken-1"
+        });
       });
     });
   }
-
-  // Get data from Firestore and setup tasks
-  var taskCollection = (0,firebase_firestore__WEBPACK_IMPORTED_MODULE_2__.collection)(db, "tasks");
-  (0,firebase_firestore__WEBPACK_IMPORTED_MODULE_2__.getDocs)(taskCollection).then(function (snapshot) {
-    console.log("Firestore snapshot:", snapshot); // Log the entire snapshot
-    if (!snapshot.empty) {
-      setupTasks(snapshot.docs);
-    } else {
-      console.log("No tasks found.");
-    }
-  })["catch"](function (error) {
-    console.error("Error getting tasks:", error.message);
-  });
 });
 
+// Update the UI based upon login status
+var loggedOutLinks = document.querySelectorAll(".logged-out");
+var loggedInLinks = document.querySelectorAll(".logged-in");
+var accountDetails = document.querySelector(".account-details");
+var setupUI = function setupUI(user) {
+  if (user) {
+    // Account info
+    var html = "\n      <div>Logged in as ".concat(user.email, "</div>\n    ");
+    accountDetails.innerHTML = html;
+    loggedInLinks.forEach(function (item) {
+      return item.style.display = "block";
+    });
+    loggedOutLinks.forEach(function (item) {
+      return item.style.display = "none";
+    });
+  } else {
+    // Hide account info
+    accountDetails.innerHTML = "";
+    loggedInLinks.forEach(function (item) {
+      return item.style.display = "none";
+    });
+    loggedOutLinks.forEach(function (item) {
+      return item.style.display = "block";
+    });
+  }
+};
+
 // Setup tasks function to render tasks on the page
-var setupTasks = function setupTasks(data) {
+var setupTasks = function setupTasks() {
+  var data = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [];
   var html = "";
-  console.log("Rendering tasks...");
-  if (data.length === 0) {
+  if (!Array.isArray(data) || data.length === 0) {
     console.log("No tasks found in data.");
+    return;
   }
   data.forEach(function (doc) {
     var task = doc.data();
-    console.log("Task data:", task);
-
-    // Ensure task fields are available
     var title = task.title || "No title";
     var description = task.description || "No description available";
     var fee = task.fee !== undefined ? "$".concat(task.fee) : "No fee specified";
     var li = "\n      <li>\n        <div class=\"collapsible-header grey lighten-4\">".concat(title, "</div>\n        <div class=\"collapsible-body white\">").concat(description, "</div>\n        <div class=\"collapsible-body white\">").concat(fee, "</div>\n      </li>\n    ");
     html += li;
   });
-
-  // Render the tasks in the collapsible list
   var taskList = document.querySelector(".tasks");
   if (taskList) {
     taskList.innerHTML = html;
-    console.log("Tasks rendered successfully.");
+    M.Collapsible.init(document.querySelectorAll(".collapsible"));
+  } else {
+    console.error("Task list element not found.");
+  }
+};
 
-    // Re-initialize Materialize CSS collapsible component
-    var collapsibles = document.querySelectorAll(".collapsible");
-    M.Collapsible.init(collapsibles);
+// Function to add a task directly to the DOM
+var addTaskToDOM = function addTaskToDOM(task) {
+  var taskList = document.querySelector(".tasks");
+  var title = task.title || "No title";
+  var description = task.description || "No description available";
+  var fee = task.fee !== undefined ? "$".concat(task.fee) : "No fee specified";
+  var li = document.createElement("li");
+  li.innerHTML = "\n    <div class=\"collapsible-header grey lighten-4\">".concat(title, "</div>\n    <div class=\"collapsible-body white\">").concat(description, "</div>\n    <div class=\"collapsible-body white\">").concat(fee, "</div>\n  ");
+  if (taskList) {
+    taskList.prepend(li); // Adds the new task to the top of the list
+    M.Collapsible.init(document.querySelectorAll(".collapsible"));
   } else {
     console.error("Task list element not found.");
   }
