@@ -38669,34 +38669,61 @@ console.log("Firebase initialized successfully:", app);
 
 // Initialize Materialize components after the DOM is fully loaded
 document.addEventListener("DOMContentLoaded", function () {
-  // Initialize Materialize components
-  var modals = document.querySelectorAll(".modal");
-  M.Modal.init(modals);
-  var collapsibles = document.querySelectorAll(".collapsible");
-  M.Collapsible.init(collapsibles);
-  var sidenavs = document.querySelectorAll(".sidenav");
-  M.Sidenav.init(sidenavs);
-  console.log("Materialize components initialized successfully.");
+  // Check if Materialize is loaded
+  if (typeof M !== "undefined") {
+    // Initialize modals
+    var modals = document.querySelectorAll(".modal");
+    M.Modal.init(modals);
+
+    // Initialize collapsibles
+    var collapsibles = document.querySelectorAll(".collapsible");
+    M.Collapsible.init(collapsibles);
+
+    // Initialize sidenav for mobile
+    var sidenavs = document.querySelectorAll(".sidenav");
+    M.Sidenav.init(sidenavs);
+    console.log("Materialize components initialized successfully.");
+  } else {
+    console.error("Materialize library is not loaded. Please ensure Materialize JavaScript is loaded before the bundle.");
+  }
 
   // Listen for auth state changes
   (0,firebase_auth__WEBPACK_IMPORTED_MODULE_1__.onAuthStateChanged)(auth, function (user) {
     var taskList = document.querySelector(".tasks");
+    console.log(user);
     if (user) {
       // Fetch and display tasks in real-time
       var taskCollection = (0,firebase_firestore__WEBPACK_IMPORTED_MODULE_2__.collection)(db, "tasks");
-      (0,firebase_firestore__WEBPACK_IMPORTED_MODULE_2__.onSnapshot)(taskCollection, function (snapshot) {
-        setupTasks(snapshot.docs);
-        setupUI(user);
-      }, function (error) {
-        if (error.code === "permission-denied") {
-          console.log("Permission denied: Unable to access Firestore without authentication.");
-        } else {
-          console.error("Error in snapshot listener:", error.message);
-        }
-      });
+      try {
+        (0,firebase_firestore__WEBPACK_IMPORTED_MODULE_2__.onSnapshot)(taskCollection, function (snapshot) {
+          console.log("Firestore snapshot:", snapshot);
+          if (!snapshot.empty) {
+            setupTasks(snapshot.docs);
+            setupUI(user);
+          } else {
+            setupTasks([]);
+            setupUI(user);
+          }
+        }, function (error) {
+          // Handle the Firestore permission error when the user is logged out
+          if (error.code === "permission-denied") {
+            console.log("Permission denied: Unable to access Firestore without authentication.");
+          } else {
+            console.error("Error in snapshot listener:", error.message);
+            M.toast({
+              html: "Error: ".concat(error.message),
+              classes: "red darken-1"
+            });
+          }
+        });
+      } catch (error) {
+        console.error("Error while setting up Firestore listener:", error.message);
+      }
     } else {
       console.log("User logged out");
-      setupUI();
+      setupUI(); // Update UI when logged out
+
+      // Display a message prompting the user to log in to view tasks with a GIF
       if (taskList) {
         taskList.innerHTML = "\n          <li class=\"collection-item center-align\" style=\"font-size: 18px; padding: 20px;\">\n            <p style=\"font-size: 1.2em; margin-top: 10px;\">\n              <a href=\"#\" class=\"modal-trigger\" data-target=\"modal-login\" style=\"color: #2B2C78; font-weight: bold; margin-right: 5px;\">Login</a> \n              or \n              <a href=\"#\" class=\"modal-trigger\" data-target=\"modal-signup\" style=\"color: #2B2C78; font-weight: bold; margin-left: 5px; margin-right: 5px\">Sign Up</a>\n              to view available tasks.\n            </p>\n            <img src=\"https://i.giphy.com/media/v1.Y2lkPTc5MGI3NjExMWRuN2M4YWg4MDAyN2xkNjd6ZGRtbXoxcDRhd3ZqdXhyM3pwcHBtMyZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9dg/bWGugCywc1x28wgqeC/giphy.gif\" alt=\"Login Required\" style=\"max-width: 100%; height: auto; margin-top: 20px;\">\n          </li>\n        ";
       }
@@ -38708,25 +38735,33 @@ document.addEventListener("DOMContentLoaded", function () {
   if (createForm) {
     createForm.addEventListener("submit", function (e) {
       e.preventDefault();
+
+      // Access form fields correctly
       var title = createForm.querySelector("#title").value;
       var description = createForm.querySelector("#description").value;
       var fee = createForm.querySelector("#fee").value;
+
+      // Add the task to Firestore
       (0,firebase_firestore__WEBPACK_IMPORTED_MODULE_2__.addDoc)((0,firebase_firestore__WEBPACK_IMPORTED_MODULE_2__.collection)(db, "tasks"), {
         title: title,
         description: description,
         fee: fee
       }).then(function (docRef) {
+        // Manually add the task to the DOM immediately
         addTaskToDOM({
           title: title,
           description: description,
           fee: fee,
           id: docRef.id
         });
+
+        // Close the modal and reset the form
         var modal = document.querySelector("#modal-create");
         if (modal) {
           M.Modal.getInstance(modal).close();
         }
         createForm.reset();
+        console.log("Task added successfully.");
       })["catch"](function (error) {
         console.error("Error adding task:", error.message);
         M.toast({
@@ -38735,16 +38770,18 @@ document.addEventListener("DOMContentLoaded", function () {
         });
       });
     });
+  } else {
+    console.error("Create form not found. Please check the form ID.");
   }
 
-  // Handle Signup
+  // Signup form handling
   var signupForm = document.querySelector("#signup-form");
   if (signupForm) {
     signupForm.addEventListener("submit", function (e) {
       e.preventDefault();
       var email = signupForm["signup-email"].value;
       var password = signupForm["signup-password"].value;
-      (0,firebase_auth__WEBPACK_IMPORTED_MODULE_1__.createUserWithEmailAndPassword)(auth, email, password).then(function () {
+      (0,firebase_auth__WEBPACK_IMPORTED_MODULE_1__.createUserWithEmailAndPassword)(auth, email, password).then(function (cred) {
         var modal = document.querySelector("#modal-signup");
         if (modal) {
           M.Modal.getInstance(modal).close();
@@ -38759,10 +38796,13 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   }
 
-  // Attach logout listener to both primary and sidenav buttons
-  var logoutButtons = document.querySelectorAll("#logout");
-  logoutButtons.forEach(function (button) {
-    button.addEventListener("click", function (e) {
+  // Logout
+  var logout = document.querySelector("#logout");
+  var logoutMobile = document.querySelector("#logout-mobile"); // Select the mobile logout button
+
+  // Attach the logout event listener for desktop
+  if (logout) {
+    logout.addEventListener("click", function (e) {
       e.preventDefault();
       (0,firebase_auth__WEBPACK_IMPORTED_MODULE_1__.signOut)(auth).then(function () {
         console.log("User signed out successfully.");
@@ -38773,16 +38813,35 @@ document.addEventListener("DOMContentLoaded", function () {
         });
       });
     });
-  });
+  }
 
-  // Handle Login
+  // Attach the logout event listener for mobile
+  if (logoutMobile) {
+    logoutMobile.addEventListener("click", function (e) {
+      e.preventDefault();
+      (0,firebase_auth__WEBPACK_IMPORTED_MODULE_1__.signOut)(auth).then(function () {
+        console.log("User signed out successfully.");
+        var sidenavInstance = M.Sidenav.getInstance(document.querySelector(".sidenav"));
+        if (sidenavInstance) {
+          sidenavInstance.close(); // Close the mobile sidenav after logout
+        }
+      })["catch"](function (error) {
+        M.toast({
+          html: "Error: ".concat(error.message),
+          classes: "red darken-1"
+        });
+      });
+    });
+  }
+
+  // Login
   var loginForm = document.querySelector("#login-form");
   if (loginForm) {
     loginForm.addEventListener("submit", function (e) {
       e.preventDefault();
       var email = loginForm["login-email"].value;
       var password = loginForm["login-password"].value;
-      (0,firebase_auth__WEBPACK_IMPORTED_MODULE_1__.signInWithEmailAndPassword)(auth, email, password).then(function () {
+      (0,firebase_auth__WEBPACK_IMPORTED_MODULE_1__.signInWithEmailAndPassword)(auth, email, password).then(function (cred) {
         var modal = document.querySelector("#modal-login");
         if (modal) {
           M.Modal.getInstance(modal).close();
@@ -38798,13 +38857,14 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 });
 
-// Update the UI based on login status
+// Update the UI based upon login status
 var loggedOutLinks = document.querySelectorAll(".logged-out");
 var loggedInLinks = document.querySelectorAll(".logged-in");
 var accountDetails = document.querySelector(".account-details");
 var setupUI = function setupUI(user) {
   if (user) {
-    var html = "<div>Logged in as ".concat(user.email, "</div>");
+    // Account info
+    var html = "\n      <div>Logged in as ".concat(user.email, "</div>\n    ");
     accountDetails.innerHTML = html;
     loggedInLinks.forEach(function (item) {
       return item.style.display = "block";
@@ -38813,6 +38873,7 @@ var setupUI = function setupUI(user) {
       return item.style.display = "none";
     });
   } else {
+    // Hide account info
     accountDetails.innerHTML = "";
     loggedInLinks.forEach(function (item) {
       return item.style.display = "none";
@@ -38823,7 +38884,7 @@ var setupUI = function setupUI(user) {
   }
 };
 
-// Render tasks on the page
+// Setup tasks function to render tasks on the page
 var setupTasks = function setupTasks() {
   var data = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [];
   var html = "";
@@ -38848,7 +38909,7 @@ var setupTasks = function setupTasks() {
   }
 };
 
-// Add a task directly to the DOM
+// Function to add a task directly to the DOM
 var addTaskToDOM = function addTaskToDOM(task) {
   var taskList = document.querySelector(".tasks");
   var title = task.title || "No title";
@@ -38857,7 +38918,7 @@ var addTaskToDOM = function addTaskToDOM(task) {
   var li = document.createElement("li");
   li.innerHTML = "\n    <div class=\"collapsible-header grey lighten-4\">".concat(title, "</div>\n    <div class=\"collapsible-body white\">").concat(description, "</div>\n    <div class=\"collapsible-body white\">").concat(fee, "</div>\n  ");
   if (taskList) {
-    taskList.prepend(li);
+    taskList.prepend(li); // Adds the new task to the top of the list
     M.Collapsible.init(document.querySelectorAll(".collapsible"));
   } else {
     console.error("Task list element not found.");
