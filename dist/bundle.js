@@ -35529,53 +35529,138 @@ body {
 /* Navbar Styling */
 nav {
     padding: 0 20px;
+    background-color: #ffffff;
+    display: flex;
+    align-items: center;
+    position: relative;
+    height: 60px; /* Fixed height for the navbar */
+}
+
+/* Logo Styling */
+.brand-logo {
+    display: flex;
+    align-items: center;
 }
 
 .brand-logo img {
-    max-height: 50px; /* Adjust logo size */
+    max-height: 65px; /* Set a max height for the logo to keep it proportional */
+    padding: 5px;
 }
 
+/* Mobile Menu Trigger */
 .sidenav-trigger {
-    color: #2B2C78 !important; /* Hamburger icon color */
+    color: #2B2C78 !important;
+    position: absolute;
+    right: 0px; /* Ensures hamburger icon is on the far right */
+    top: 50%;
+    transform: translateY(-50%); /* Centers vertically */
 }
 
-/* Section Padding Classes */
-.section-padding {
-    padding: 4rem 0; /* General section padding */
+/* Sign Up Button Styling */
+.nav-signup-btn {
+    position: absolute;
+    right: 80px; /* Add more space to avoid overlap with the hamburger button */
+    background-color: #FF0031;
+    color: white;
+    padding: 0px 12px;
+    border-radius: 5px;
+    font-size: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 50; /* Set to full height of the navbar */
+    top: 0;
 }
 
-.padding-large {
-    padding: 5rem 0; /* Larger padding for specific sections */
+/* Responsive adjustments for mobile navbar */
+@media (max-width: 768px) {
+    nav {
+        height: 60px; /* Slightly increase height on smaller screens */
+    }
+
+    .brand-logo img {
+        max-height: 60px; /* Further reduce logo size on mobile */
+    }
+
+    .nav-signup-btn {
+        right: 80px; /* Adjust right position for better spacing */
+        height: 50px;
+        align: center;
+    }
+
+    .sidenav-trigger {
+        right: 0px; /* Adjust right position to align properly */
+    }
+}
+
+/* Desktop Nav Links */
+#nav-mobile li a {
+    color: #2B2C78 !important; /* Set link color to blue for better readability */
+    font-weight: 500;
+}
+
+#nav-mobile li a:hover {
+    color: #FF0031 !important; /* Change to red on hover */
+}
+
+/* Sidenav (Mobile Navigation) */
+.sidenav {
+    width: 250px;
+    background-color: #f5f5f5;
+    transform: translateX(-100%); /* Slide in from the left */
+    transition: transform 0.3s ease;
+}
+
+.sidenav.open {
+    transform: translateX(0);
+}
+
+.sidenav li > a {
+    color: #2B2C78;
 }
 
 /* Headings Styling */
 h1 {
-    font-size: 4rem; /* Adjust font size for main headings */
-    color: #2B2C78;
+    font-size: 4rem; /* Adjust to preferred size */
+    color: #2B2C78; /* Set heading color to blue */
 }
 
 h2 {
-    font-size: 2.4rem; /* Adjust font size for subheadings */
+    font-size: 2.4rem; /* Adjust to preferred size */
+    color: #2B2C78; /* Set heading color to blue */
     margin-bottom: 0;
-    color: #2B2C78;
 }
 
 h3 {
-    font-size: 1.3rem; /* Adjust font size for smaller subheadings */
+    font-size: 1.3rem; /* Adjust to preferred size */
     font-weight: 400;
-    color: #2B2C78;
+    color: #2B2C78; /* Set heading color to blue */
 }
 
 /* Hero Section Styling */
 .section_hero {
-    padding: 4rem 0; /* Default padding */
-    font-size: 1.3rem;
+    padding: 4rem 0;
 }
 
-.section_hero p {
-    color: #333; /* Adjust as needed */
-    font-size: 1.4rem; /* Increased font size for readability */
-    margin-top: 1rem;
+.hero-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.hero-text {
+    flex: 1;
+    padding-right: 20px;
+}
+
+.hero-gif {
+    flex: 1;
+    text-align: right;
+}
+
+.gif-image {
+    max-width: 100%;
+    height: auto;
 }
 
 /* Hero Buttons */
@@ -35584,7 +35669,7 @@ h3 {
 }
 
 .hero-buttons .login-btn {
-    background-color: #FF0031; /* Red background */
+    background-color: #FF0031;
     color: white;
     font-family: 'Inter', sans-serif;
     margin-right: 10px;
@@ -35600,43 +35685,45 @@ h3 {
 
 .hero-buttons .signup-btn {
     background-color: transparent;
-    border: 2px solid #2B2C78; /* Blue border */
-    color: #2B2C78; /* Blue text */
-    border-radius: 5px; /* Small radius */
+    border: 2px solid #2B2C78;
+    color: #2B2C78;
+    border-radius: 5px;
     font-family: 'Inter', sans-serif;
     padding: 8px 18px;
     transition: background-color 0.3s, color 0.3s;
 }
 
-.hero-buttons .signup-btn:hover {
-    background-color: #2B2C78;
-    color: white;
-}
+/* Add margin between buttons and gif on tablet and below */
+@media (max-width: 768px) {
+    .hero-buttons {
+        margin-bottom: 20px; /* Adds margin between buttons and gif */
+    }
 
-/* App Description */
-#app-description {
-    margin-top: 40px;
-    padding: 20px;
-    background-color: white;
-    border-radius: 8px;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-}
+    .hero-container {
+        flex-direction: column;
+        text-align: center;
+    }
 
-#app-description h2,
-#app-description h3 {
-    margin-bottom: 10px;
-}
+    .hero-text {
+        padding-right: 0;
+    }
 
-/* Collapsible Task List Styling */
-.collapsible-header {
-    background-color: white !important; /* Ensure background is white */
-    border-bottom: 1px solid #ddd;
-    padding: 10px 20px;
-}
+    .hero-buttons {
+        flex-direction: column;
+        gap: 10px;
+    }
 
-.collapsible-body {
-    background-color: white;
-    padding: 20px;
+    h1 {
+        font-size: 2rem; /* Smaller size for mobile */
+    }
+
+    h2 {
+        font-size: 1.8rem; /* Adjusted for tablet and below */
+    }
+
+    h3 {
+        font-size: 1.2rem; /* Adjusted for smaller screens */
+    }
 }
 
 /* Modals */
@@ -35654,26 +35741,16 @@ h3 {
     background-color: #e6002c;
 }
 
-/* Sidenav (Mobile Navigation) */
-.sidenav {
-    width: 250px;
-    background-color: #f5f5f5;
-}
-
-.sidenav li > a {
-    color: #2B2C78;
-}
-
 /* Footer Styling */
 .footer {
-    background-color: #2B2C78; /* Blue background */
+    background-color: #2B2C78;
     color: white;
     padding: 20px 0;
     text-align: center;
 }
 
 .footer-logo {
-    filter: brightness(0) invert(1); /* Make the logo white */
+    filter: brightness(0) invert(1);
     max-height: 40px;
     margin-bottom: 10px;
 }
@@ -35684,12 +35761,12 @@ h3 {
 }
 
 .footer-link {
-    color: #CFD9E3; /* Lighter color for the link */
+    color: #CFD9E3;
     text-decoration: underline;
 }
 
 .footer-link:hover {
-    color: #ffffff; /* Change color on hover */
+    color: #ffffff;
 }
 
 /* Utility Classes */
@@ -35702,7 +35779,7 @@ h3 {
     margin: 0 auto;
     padding: 0 15px;
 }
-`, "",{"version":3,"sources":["webpack://./src/style.css"],"names":[],"mappings":"AAAA,oBAAoB;AACpB;IACI,gCAAgC;IAChC,yBAAyB;IACzB,SAAS;IACT,UAAU;AACd;;AAEA,mBAAmB;AACnB;IACI,eAAe;AACnB;;AAEA;IACI,gBAAgB,EAAE,qBAAqB;AAC3C;;AAEA;IACI,yBAAyB,EAAE,yBAAyB;AACxD;;AAEA,4BAA4B;AAC5B;IACI,eAAe,EAAE,4BAA4B;AACjD;;AAEA;IACI,eAAe,EAAE,yCAAyC;AAC9D;;AAEA,qBAAqB;AACrB;IACI,eAAe,EAAE,uCAAuC;IACxD,cAAc;AAClB;;AAEA;IACI,iBAAiB,EAAE,qCAAqC;IACxD,gBAAgB;IAChB,cAAc;AAClB;;AAEA;IACI,iBAAiB,EAAE,6CAA6C;IAChE,gBAAgB;IAChB,cAAc;AAClB;;AAEA,yBAAyB;AACzB;IACI,eAAe,EAAE,oBAAoB;IACrC,iBAAiB;AACrB;;AAEA;IACI,WAAW,EAAE,qBAAqB;IAClC,iBAAiB,EAAE,wCAAwC;IAC3D,gBAAgB;AACpB;;AAEA,iBAAiB;AACjB;IACI,gBAAgB;AACpB;;AAEA;IACI,yBAAyB,EAAE,mBAAmB;IAC9C,YAAY;IACZ,gCAAgC;IAChC,kBAAkB;IAClB,YAAY;IACZ,kBAAkB;IAClB,kBAAkB;IAClB,iCAAiC;AACrC;;AAEA;IACI,yBAAyB;AAC7B;;AAEA;IACI,6BAA6B;IAC7B,yBAAyB,EAAE,gBAAgB;IAC3C,cAAc,EAAE,cAAc;IAC9B,kBAAkB,EAAE,iBAAiB;IACrC,gCAAgC;IAChC,iBAAiB;IACjB,6CAA6C;AACjD;;AAEA;IACI,yBAAyB;IACzB,YAAY;AAChB;;AAEA,oBAAoB;AACpB;IACI,gBAAgB;IAChB,aAAa;IACb,uBAAuB;IACvB,kBAAkB;IAClB,yCAAyC;AAC7C;;AAEA;;IAEI,mBAAmB;AACvB;;AAEA,kCAAkC;AAClC;IACI,kCAAkC,EAAE,+BAA+B;IACnE,6BAA6B;IAC7B,kBAAkB;AACtB;;AAEA;IACI,uBAAuB;IACvB,aAAa;AACjB;;AAEA,WAAW;AACX;IACI,kBAAkB;AACtB;;AAEA;IACI,yBAAyB;IACzB,YAAY;IACZ,gCAAgC;AACpC;;AAEA;IACI,yBAAyB;AAC7B;;AAEA,gCAAgC;AAChC;IACI,YAAY;IACZ,yBAAyB;AAC7B;;AAEA;IACI,cAAc;AAClB;;AAEA,mBAAmB;AACnB;IACI,yBAAyB,EAAE,oBAAoB;IAC/C,YAAY;IACZ,eAAe;IACf,kBAAkB;AACtB;;AAEA;IACI,+BAA+B,EAAE,wBAAwB;IACzD,gBAAgB;IAChB,mBAAmB;AACvB;;AAEA;IACI,mBAAmB;IACnB,SAAS;AACb;;AAEA;IACI,cAAc,EAAE,+BAA+B;IAC/C,0BAA0B;AAC9B;;AAEA;IACI,cAAc,EAAE,0BAA0B;AAC9C;;AAEA,oBAAoB;AACpB;IACI,kBAAkB;AACtB;;AAEA;IACI,iBAAiB;IACjB,cAAc;IACd,eAAe;AACnB","sourcesContent":["/* General Styling */\r\nbody {\r\n    font-family: 'Inter', sans-serif;\r\n    background-color: #f5f5f5;\r\n    margin: 0;\r\n    padding: 0;\r\n}\r\n\r\n/* Navbar Styling */\r\nnav {\r\n    padding: 0 20px;\r\n}\r\n\r\n.brand-logo img {\r\n    max-height: 50px; /* Adjust logo size */\r\n}\r\n\r\n.sidenav-trigger {\r\n    color: #2B2C78 !important; /* Hamburger icon color */\r\n}\r\n\r\n/* Section Padding Classes */\r\n.section-padding {\r\n    padding: 4rem 0; /* General section padding */\r\n}\r\n\r\n.padding-large {\r\n    padding: 5rem 0; /* Larger padding for specific sections */\r\n}\r\n\r\n/* Headings Styling */\r\nh1 {\r\n    font-size: 4rem; /* Adjust font size for main headings */\r\n    color: #2B2C78;\r\n}\r\n\r\nh2 {\r\n    font-size: 2.4rem; /* Adjust font size for subheadings */\r\n    margin-bottom: 0;\r\n    color: #2B2C78;\r\n}\r\n\r\nh3 {\r\n    font-size: 1.3rem; /* Adjust font size for smaller subheadings */\r\n    font-weight: 400;\r\n    color: #2B2C78;\r\n}\r\n\r\n/* Hero Section Styling */\r\n.section_hero {\r\n    padding: 4rem 0; /* Default padding */\r\n    font-size: 1.3rem;\r\n}\r\n\r\n.section_hero p {\r\n    color: #333; /* Adjust as needed */\r\n    font-size: 1.4rem; /* Increased font size for readability */\r\n    margin-top: 1rem;\r\n}\r\n\r\n/* Hero Buttons */\r\n.hero-buttons {\r\n    margin-top: 20px;\r\n}\r\n\r\n.hero-buttons .login-btn {\r\n    background-color: #FF0031; /* Red background */\r\n    color: white;\r\n    font-family: 'Inter', sans-serif;\r\n    margin-right: 10px;\r\n    border: none;\r\n    padding: 10px 20px;\r\n    border-radius: 5px;\r\n    transition: background-color 0.3s;\r\n}\r\n\r\n.hero-buttons .login-btn:hover {\r\n    background-color: #e6002c;\r\n}\r\n\r\n.hero-buttons .signup-btn {\r\n    background-color: transparent;\r\n    border: 2px solid #2B2C78; /* Blue border */\r\n    color: #2B2C78; /* Blue text */\r\n    border-radius: 5px; /* Small radius */\r\n    font-family: 'Inter', sans-serif;\r\n    padding: 8px 18px;\r\n    transition: background-color 0.3s, color 0.3s;\r\n}\r\n\r\n.hero-buttons .signup-btn:hover {\r\n    background-color: #2B2C78;\r\n    color: white;\r\n}\r\n\r\n/* App Description */\r\n#app-description {\r\n    margin-top: 40px;\r\n    padding: 20px;\r\n    background-color: white;\r\n    border-radius: 8px;\r\n    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);\r\n}\r\n\r\n#app-description h2,\r\n#app-description h3 {\r\n    margin-bottom: 10px;\r\n}\r\n\r\n/* Collapsible Task List Styling */\r\n.collapsible-header {\r\n    background-color: white !important; /* Ensure background is white */\r\n    border-bottom: 1px solid #ddd;\r\n    padding: 10px 20px;\r\n}\r\n\r\n.collapsible-body {\r\n    background-color: white;\r\n    padding: 20px;\r\n}\r\n\r\n/* Modals */\r\n.modal {\r\n    border-radius: 8px;\r\n}\r\n\r\n.modal .btn {\r\n    background-color: #FF0031;\r\n    color: white;\r\n    font-family: 'Inter', sans-serif;\r\n}\r\n\r\n.modal .btn:hover {\r\n    background-color: #e6002c;\r\n}\r\n\r\n/* Sidenav (Mobile Navigation) */\r\n.sidenav {\r\n    width: 250px;\r\n    background-color: #f5f5f5;\r\n}\r\n\r\n.sidenav li > a {\r\n    color: #2B2C78;\r\n}\r\n\r\n/* Footer Styling */\r\n.footer {\r\n    background-color: #2B2C78; /* Blue background */\r\n    color: white;\r\n    padding: 20px 0;\r\n    text-align: center;\r\n}\r\n\r\n.footer-logo {\r\n    filter: brightness(0) invert(1); /* Make the logo white */\r\n    max-height: 40px;\r\n    margin-bottom: 10px;\r\n}\r\n\r\n.footer-text {\r\n    font-size: 0.875rem;\r\n    margin: 0;\r\n}\r\n\r\n.footer-link {\r\n    color: #CFD9E3; /* Lighter color for the link */\r\n    text-decoration: underline;\r\n}\r\n\r\n.footer-link:hover {\r\n    color: #ffffff; /* Change color on hover */\r\n}\r\n\r\n/* Utility Classes */\r\n.center-align {\r\n    text-align: center;\r\n}\r\n\r\n.container {\r\n    max-width: 1280px;\r\n    margin: 0 auto;\r\n    padding: 0 15px;\r\n}\r\n"],"sourceRoot":""}]);
+`, "",{"version":3,"sources":["webpack://./src/style.css"],"names":[],"mappings":"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","sourcesContent":["/* General Styling */\r\nbody {\r\n    font-family: 'Inter', sans-serif;\r\n    background-color: #f5f5f5;\r\n    margin: 0;\r\n    padding: 0;\r\n}\r\n\r\n/* Navbar Styling */\r\nnav {\r\n    padding: 0 20px;\r\n    background-color: #ffffff;\r\n    display: flex;\r\n    align-items: center;\r\n    position: relative;\r\n    height: 60px; /* Fixed height for the navbar */\r\n}\r\n\r\n/* Logo Styling */\r\n.brand-logo {\r\n    display: flex;\r\n    align-items: center;\r\n}\r\n\r\n.brand-logo img {\r\n    max-height: 65px; /* Set a max height for the logo to keep it proportional */\r\n    padding: 5px;\r\n}\r\n\r\n/* Mobile Menu Trigger */\r\n.sidenav-trigger {\r\n    color: #2B2C78 !important;\r\n    position: absolute;\r\n    right: 0px; /* Ensures hamburger icon is on the far right */\r\n    top: 50%;\r\n    transform: translateY(-50%); /* Centers vertically */\r\n}\r\n\r\n/* Sign Up Button Styling */\r\n.nav-signup-btn {\r\n    position: absolute;\r\n    right: 80px; /* Add more space to avoid overlap with the hamburger button */\r\n    background-color: #FF0031;\r\n    color: white;\r\n    padding: 0px 12px;\r\n    border-radius: 5px;\r\n    font-size: 1rem;\r\n    display: flex;\r\n    align-items: center;\r\n    justify-content: center;\r\n    height: 50; /* Set to full height of the navbar */\r\n    top: 0;\r\n}\r\n\r\n/* Responsive adjustments for mobile navbar */\r\n@media (max-width: 768px) {\r\n    nav {\r\n        height: 60px; /* Slightly increase height on smaller screens */\r\n    }\r\n\r\n    .brand-logo img {\r\n        max-height: 60px; /* Further reduce logo size on mobile */\r\n    }\r\n\r\n    .nav-signup-btn {\r\n        right: 80px; /* Adjust right position for better spacing */\r\n        height: 50px;\r\n        align: center;\r\n    }\r\n\r\n    .sidenav-trigger {\r\n        right: 0px; /* Adjust right position to align properly */\r\n    }\r\n}\r\n\r\n/* Desktop Nav Links */\r\n#nav-mobile li a {\r\n    color: #2B2C78 !important; /* Set link color to blue for better readability */\r\n    font-weight: 500;\r\n}\r\n\r\n#nav-mobile li a:hover {\r\n    color: #FF0031 !important; /* Change to red on hover */\r\n}\r\n\r\n/* Sidenav (Mobile Navigation) */\r\n.sidenav {\r\n    width: 250px;\r\n    background-color: #f5f5f5;\r\n    transform: translateX(-100%); /* Slide in from the left */\r\n    transition: transform 0.3s ease;\r\n}\r\n\r\n.sidenav.open {\r\n    transform: translateX(0);\r\n}\r\n\r\n.sidenav li > a {\r\n    color: #2B2C78;\r\n}\r\n\r\n/* Headings Styling */\r\nh1 {\r\n    font-size: 4rem; /* Adjust to preferred size */\r\n    color: #2B2C78; /* Set heading color to blue */\r\n}\r\n\r\nh2 {\r\n    font-size: 2.4rem; /* Adjust to preferred size */\r\n    color: #2B2C78; /* Set heading color to blue */\r\n    margin-bottom: 0;\r\n}\r\n\r\nh3 {\r\n    font-size: 1.3rem; /* Adjust to preferred size */\r\n    font-weight: 400;\r\n    color: #2B2C78; /* Set heading color to blue */\r\n}\r\n\r\n/* Hero Section Styling */\r\n.section_hero {\r\n    padding: 4rem 0;\r\n}\r\n\r\n.hero-container {\r\n    display: flex;\r\n    align-items: center;\r\n    justify-content: space-between;\r\n}\r\n\r\n.hero-text {\r\n    flex: 1;\r\n    padding-right: 20px;\r\n}\r\n\r\n.hero-gif {\r\n    flex: 1;\r\n    text-align: right;\r\n}\r\n\r\n.gif-image {\r\n    max-width: 100%;\r\n    height: auto;\r\n}\r\n\r\n/* Hero Buttons */\r\n.hero-buttons {\r\n    margin-top: 20px;\r\n}\r\n\r\n.hero-buttons .login-btn {\r\n    background-color: #FF0031;\r\n    color: white;\r\n    font-family: 'Inter', sans-serif;\r\n    margin-right: 10px;\r\n    border: none;\r\n    padding: 10px 20px;\r\n    border-radius: 5px;\r\n    transition: background-color 0.3s;\r\n}\r\n\r\n.hero-buttons .login-btn:hover {\r\n    background-color: #e6002c;\r\n}\r\n\r\n.hero-buttons .signup-btn {\r\n    background-color: transparent;\r\n    border: 2px solid #2B2C78;\r\n    color: #2B2C78;\r\n    border-radius: 5px;\r\n    font-family: 'Inter', sans-serif;\r\n    padding: 8px 18px;\r\n    transition: background-color 0.3s, color 0.3s;\r\n}\r\n\r\n/* Add margin between buttons and gif on tablet and below */\r\n@media (max-width: 768px) {\r\n    .hero-buttons {\r\n        margin-bottom: 20px; /* Adds margin between buttons and gif */\r\n    }\r\n\r\n    .hero-container {\r\n        flex-direction: column;\r\n        text-align: center;\r\n    }\r\n\r\n    .hero-text {\r\n        padding-right: 0;\r\n    }\r\n\r\n    .hero-buttons {\r\n        flex-direction: column;\r\n        gap: 10px;\r\n    }\r\n\r\n    h1 {\r\n        font-size: 2rem; /* Smaller size for mobile */\r\n    }\r\n\r\n    h2 {\r\n        font-size: 1.8rem; /* Adjusted for tablet and below */\r\n    }\r\n\r\n    h3 {\r\n        font-size: 1.2rem; /* Adjusted for smaller screens */\r\n    }\r\n}\r\n\r\n/* Modals */\r\n.modal {\r\n    border-radius: 8px;\r\n}\r\n\r\n.modal .btn {\r\n    background-color: #FF0031;\r\n    color: white;\r\n    font-family: 'Inter', sans-serif;\r\n}\r\n\r\n.modal .btn:hover {\r\n    background-color: #e6002c;\r\n}\r\n\r\n/* Footer Styling */\r\n.footer {\r\n    background-color: #2B2C78;\r\n    color: white;\r\n    padding: 20px 0;\r\n    text-align: center;\r\n}\r\n\r\n.footer-logo {\r\n    filter: brightness(0) invert(1);\r\n    max-height: 40px;\r\n    margin-bottom: 10px;\r\n}\r\n\r\n.footer-text {\r\n    font-size: 0.875rem;\r\n    margin: 0;\r\n}\r\n\r\n.footer-link {\r\n    color: #CFD9E3;\r\n    text-decoration: underline;\r\n}\r\n\r\n.footer-link:hover {\r\n    color: #ffffff;\r\n}\r\n\r\n/* Utility Classes */\r\n.center-align {\r\n    text-align: center;\r\n}\r\n\r\n.container {\r\n    max-width: 1280px;\r\n    margin: 0 auto;\r\n    padding: 0 15px;\r\n}\r\n"],"sourceRoot":""}]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
